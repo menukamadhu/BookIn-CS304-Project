@@ -35,7 +35,7 @@ public class SalonController {
 
             }else if (res==null){
                 responseDTO.setCode(VarList.RSP_DUPLICATE);
-                responseDTO.setMessage("Salon registered");
+                responseDTO.setMessage("Salon has registered");
                 responseDTO.setContent(salonDTO);
                 return new ResponseEntity(responseDTO,HttpStatus.BAD_REQUEST);
             }else {
@@ -139,28 +139,9 @@ public class SalonController {
             return new ResponseEntity(responseDTO,HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    @PostMapping(value = "/login")
-    public ResponseEntity loginSalon(@RequestBody LoginDTO loginDTO){
-        try {
-            LoginResponse loginResponse = salonService.loginSalon(loginDTO);
-            if (loginResponse!=null){
-                responseDTO.setCode(VarList.RSP_SUCCESS);
-                responseDTO.setMessage("Success");
-                responseDTO.setContent(loginResponse);
-                return new ResponseEntity(responseDTO, HttpStatus.ACCEPTED);
-            }else {
-                responseDTO.setCode(VarList.RSP_NO_DATA_FOUND);
-                responseDTO.setMessage("No Salon available for this ID");
-                responseDTO.setContent(null);
-                return new ResponseEntity(responseDTO,HttpStatus.BAD_REQUEST);
-            }
-            //return ResponseEntity.ok(loginResponse);
-        }catch (Exception e){
-            responseDTO.setCode(VarList.RSP_ERROR);
-            responseDTO.setMessage(e.getMessage());
-            responseDTO.setContent(null);
-            return new ResponseEntity(responseDTO,HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    @PostMapping(value = "/loginSalon")
+    public ResponseEntity<?> loginSalon(@RequestBody LoginDTO loginDTO) {
+        LoginResponse loginResponse = salonService.loginSalon(loginDTO);
+        return ResponseEntity.ok(loginResponse);
     }
-
 }

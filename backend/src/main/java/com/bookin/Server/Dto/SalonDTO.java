@@ -1,14 +1,11 @@
 package com.bookin.Server.Dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Getter
+@Builder
 public class SalonDTO {
     private int salonID;
     private String name;

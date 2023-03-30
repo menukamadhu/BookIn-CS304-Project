@@ -29,7 +29,8 @@ public class SalonService {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
     public SalonDTO registerSalon(SalonDTO salonDTO){
-        if (salonRepo.existsById(salonDTO.getSalonID())){
+        Salon salon1 = salonRepo.findByEmail(salonDTO.getEmail());
+        if (salon1!=null){
             return null;
         }else {
             Salon salon = new Salon(
@@ -78,22 +79,25 @@ public class SalonService {
     public LoginResponse loginSalon(LoginDTO loginDTO){
         String msg = "";
         Salon salon = salonRepo.findByEmail(loginDTO.getEmail());
+//        System.out.println(salon.getSalonID());
         if(salon!=null){
+//            System.out.println("hello world");
             String password = loginDTO.getPassword();
             String encodedPassword = salon.getPassword();
             boolean isPwdRight = passwordEncoder.matches(password,encodedPassword);
             if (isPwdRight){
-                Optional<Salon> salon1 = salonRepo.findOnyByEmailAndPassword(loginDTO.getEmail(), encodedPassword);
-                if (salon1.isPresent()){
-                    return new LoginResponse("Login Success",true);
+                Salon salon1 = salonRepo.findOneByEmailAndPassword(loginDTO.getEmail(), encodedPassword);
+                if (salon1!=null){
+                    SalonDTO salonDTO=modelMapper.map(salon1, new TypeToken<SalonDTO>(){}.getType());
+                    return new LoginResponse("Login Success",true,null,salonDTO);
                 }else {
-                    return new LoginResponse("Login Failed",false);
+                    return new LoginResponse("Login Failed",false,null,null);
                 }
             }else {
-                return new LoginResponse("Password not matching",false);
+                return new LoginResponse("Password not matching",false,null,null);
             }
         }else {
-            return new LoginResponse("Email not exist",false );
+            return new LoginResponse("Email not exist",false,null,null);
         }
     }
 }
