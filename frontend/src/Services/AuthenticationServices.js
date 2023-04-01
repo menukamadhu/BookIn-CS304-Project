@@ -3,19 +3,10 @@ import axios from "axios";
 axios.defaults.baseURL = process.env.REACT_APP_BACKEND_SERVER;
 
 //login
-const loginClient = async (data) => {
+const userLogin = async (data) => {
   const response = await axios({
     method: "post",
-    url: `${process.env.REACT_APP_BACKEND_SERVER}/register/loginClient`,
-    data: data,
-    headers: { "Content-Type": "application/json; charset=utf-8" },
-  });
-  return response;
-};
-const loginSalon = async (data) => {
-  const response = await axios({
-    method: "post",
-    url: `${process.env.REACT_APP_BACKEND_SERVER}/register/loginSalon`,
+    url: `${process.env.REACT_APP_BACKEND_SERVER}/login/userLogin`,
     data: data,
     headers: { "Content-Type": "application/json; charset=utf-8" },
   });
@@ -45,8 +36,7 @@ const RegisterClient = async (data) => {
 };
 
 const AuthenticationServices = {
-  loginClient,
-  loginSalon,
+  userLogin,
   Register,
   RegisterClient,
 };
