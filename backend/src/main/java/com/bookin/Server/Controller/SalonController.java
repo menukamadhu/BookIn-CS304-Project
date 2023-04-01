@@ -139,9 +139,4 @@ public class SalonController {
             return new ResponseEntity(responseDTO,HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    @PostMapping(value = "/loginSalon")
-    public ResponseEntity<?> loginSalon(@RequestBody LoginDTO loginDTO) {
-        LoginResponse loginResponse = salonService.loginSalon(loginDTO);
-        return ResponseEntity.ok(loginResponse);
-    }
 }

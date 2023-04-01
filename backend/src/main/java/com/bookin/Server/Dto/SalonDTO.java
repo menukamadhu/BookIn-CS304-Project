@@ -11,6 +11,7 @@ public class SalonDTO {
     private String name;
     private String email;
     private String contactNum;
+    private String type;
     private String district;
     private String password;
 }

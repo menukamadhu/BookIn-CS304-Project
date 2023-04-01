@@ -25,8 +25,9 @@ const SalonRegister = () => {
     business_name: "",
     email: "",
     contact_num: "",
-    password: "",
+    type: "",
     district: "",
+    password: "",
     confirm_password: "",
   });
 
@@ -47,6 +48,7 @@ const SalonRegister = () => {
         name: data.business_name,
         email: data.email,
         contactNum: data.contact_num,
+        type: data.type,
         district: data.district,
         password: data.password,
       };
@@ -194,6 +196,24 @@ const SalonRegister = () => {
                 />
                 {errors.contact_num && (
                   <p className="text-red-600">Invalid Mobile Number</p>
+                )}
+
+                <select
+                  className="w-full p-2 bg-white border-2 border-gray-300 select select-bordered "
+                  type="text"
+                  name="type"
+                  {...register("type", {
+                    required: true,
+                  })}>
+                  <option disabled selected>
+                    Choose your salon type
+                  </option>
+                  <option value="Gents">Gents</option>
+                  <option value="Ladies">Ladies</option>
+                  <option value="Unisex">Unisex</option>
+                </select>
+                {errors.type && (
+                  <p className="text-red-600">Please select your salon type</p>
                 )}
 
                 <select

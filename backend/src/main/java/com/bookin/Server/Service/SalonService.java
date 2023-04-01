@@ -2,6 +2,8 @@ package com.bookin.Server.Service;
 
 import com.bookin.Server.Dto.LoginDTO;
 import com.bookin.Server.Dto.SalonDTO;
+import com.bookin.Server.Entity.Login;
+import com.bookin.Server.Entity.Packages;
 import com.bookin.Server.Entity.Salon;
 import com.bookin.Server.Repository.SalonRepo;
 import com.bookin.Server.Response.LoginResponse;
@@ -28,20 +30,33 @@ public class SalonService {
     private ModelMapper modelMapper;
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
+
+    @Autowired
+    private LoginService loginService;
     public SalonDTO registerSalon(SalonDTO salonDTO){
         Salon salon1 = salonRepo.findByEmail(salonDTO.getEmail());
         if (salon1!=null){
             return null;
         }else {
-            Salon salon = new Salon(
-                    salonDTO.getSalonID(),
-                    salonDTO.getName(),
-                    salonDTO.getEmail(),
-                    salonDTO.getContactNum(),
-                    salonDTO.getDistrict(),
-                    this.passwordEncoder.encode(salonDTO.getPassword())
-            );
+            Salon salon = new Salon();
+            salon.setName(salonDTO.getName());
+            salon.setEmail(salonDTO.getEmail());
+            salon.setContactNum(salonDTO.getContactNum());
+            salon.setType(salonDTO.getType());
+            salon.setDistrict(salonDTO.getDistrict());
+            salon.setPassword(passwordEncoder.encode(salonDTO.getPassword()));
+//
             Salon s=salonRepo.save(salon);
+
+            if(s!=null){
+                Login l=new Login();
+                l.setRole("Salon");
+                l.setId(s.getSalonID());
+                l.setEmail(salonDTO.getEmail());
+                l.setPassword(passwordEncoder.encode(salonDTO.getPassword()));
+
+                LoginDTO k=loginService.addLoginService(modelMapper.map(l,new TypeToken<LoginDTO>(){}.getType()));
+            }
 
             return modelMapper.map(s,new TypeToken<SalonDTO>(){}.getType());
         }
@@ -76,28 +91,28 @@ public class SalonService {
             return VarList.RSP_NO_DATA_FOUND;
         }
     }
-    public LoginResponse loginSalon(LoginDTO loginDTO){
-        String msg = "";
-        Salon salon = salonRepo.findByEmail(loginDTO.getEmail());
-//        System.out.println(salon.getSalonID());
-        if(salon!=null){
-//            System.out.println("hello world");
-            String password = loginDTO.getPassword();
-            String encodedPassword = salon.getPassword();
-            boolean isPwdRight = passwordEncoder.matches(password,encodedPassword);
-            if (isPwdRight){
-                Salon salon1 = salonRepo.findOneByEmailAndPassword(loginDTO.getEmail(), encodedPassword);
-                if (salon1!=null){
-                    SalonDTO salonDTO=modelMapper.map(salon1, new TypeToken<SalonDTO>(){}.getType());
-                    return new LoginResponse("Login Success",true,null,salonDTO);
-                }else {
-                    return new LoginResponse("Login Failed",false,null,null);
-                }
-            }else {
-                return new LoginResponse("Password not matching",false,null,null);
-            }
-        }else {
-            return new LoginResponse("Email not exist",false,null,null);
-        }
-    }
+//    public LoginResponse loginSalon(LoginDTO loginDTO){
+//        String msg = "";
+//        Salon salon = salonRepo.findByEmail(loginDTO.getEmail());
+////        System.out.println(salon.getSalonID());
+//        if(salon!=null){
+////            System.out.println("hello world");
+//            String password = loginDTO.getPassword();
+//            String encodedPassword = salon.getPassword();
+//            boolean isPwdRight = passwordEncoder.matches(password,encodedPassword);
+//            if (isPwdRight){
+//                Salon salon1 = salonRepo.findOneByEmailAndPassword(loginDTO.getEmail(), encodedPassword);
+//                if (salon1!=null){
+//                    SalonDTO salonDTO=modelMapper.map(salon1, new TypeToken<SalonDTO>(){}.getType());
+//                    return new LoginResponse("Login Success",true,null,salonDTO);
+//                }else {
+//                    return new LoginResponse("Login Failed",false,null,null);
+//                }
+//            }else {
+//                return new LoginResponse("Password not matching",false,null,null);
+//            }
+//        }else {
+//            return new LoginResponse("Email not exist",false,null,null);
+//        }
+//    }
 }

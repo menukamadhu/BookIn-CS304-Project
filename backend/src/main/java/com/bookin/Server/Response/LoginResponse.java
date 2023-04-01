@@ -1,6 +1,7 @@
 package com.bookin.Server.Response;
 
 import com.bookin.Server.Dto.ClientDTO;
+import com.bookin.Server.Dto.LoginDTO;
 import com.bookin.Server.Dto.SalonDTO;
 import com.bookin.Server.Entity.Client;
 import lombok.AllArgsConstructor;
@@ -14,7 +15,7 @@ public class LoginResponse {
     String message;
     boolean status;
 
-    ClientDTO client;
+    LoginDTO loginDTO;
 
-    SalonDTO salon;
+
 }

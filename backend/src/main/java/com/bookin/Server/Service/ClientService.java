@@ -4,6 +4,7 @@ import com.bookin.Server.Dto.ClientDTO;
 import com.bookin.Server.Dto.LoginDTO;
 import com.bookin.Server.Dto.SalonDTO;
 import com.bookin.Server.Entity.Client;
+import com.bookin.Server.Entity.Login;
 import com.bookin.Server.Entity.Salon;
 import com.bookin.Server.Repository.ClientRepo;
 import com.bookin.Server.Response.LoginResponse;
@@ -33,6 +34,8 @@ public class ClientService {
     private ModelMapper modelMapper;
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
+    @Autowired
+    LoginService loginService;
     public ClientDTO registerClient(ClientDTO clientDTO){
         Client client1 = clientRepo.findByEmail(clientDTO.getEmail());
         if (client1!=null){
@@ -49,6 +52,16 @@ public class ClientService {
                     this.passwordEncoder.encode(clientDTO.getPassword())
             );
             Client c = clientRepo.save(client);
+
+            if (c!=null){
+                Login l = new Login();
+                l.setRole("Client");
+                l.setId(c.getClientID());
+                l.setEmail(c.getEmail());
+                l.setPassword(this.passwordEncoder.encode(clientDTO.getPassword()));
+
+                LoginDTO k = loginService.addLoginService(modelMapper.map(l,new TypeToken<LoginDTO>(){}.getType()));
+            }
             return modelMapper.map(c, new TypeToken<ClientDTO>(){}.getType());
         }
     }
@@ -80,31 +93,26 @@ public class ClientService {
             return VarList.RSP_NO_DATA_FOUND;
         }
     }
-    public LoginResponse loginClient(LoginDTO loginDTO){
-        String msg="";
-        Client client = clientRepo.findByEmail(loginDTO.getEmail());
-        if (client!=null){
-
-            String password = loginDTO.getPassword();
-            String encodedPassword = client.getPassword();
-
-//            System.out.println("hello world");
-            boolean isPwdRight = passwordEncoder.matches(password,encodedPassword);
-//            System.out.println(isPwdRight);
-            if (isPwdRight){
-
-                Client client1 = clientRepo.findOneByEmailAndPassword(loginDTO.getEmail(), encodedPassword);
-                if (client1!=null){
-                    ClientDTO clientDTO=modelMapper.map(client1,new TypeToken<ClientDTO>(){}.getType());
-                    return new LoginResponse("Login Success",true, clientDTO,null);
-                }else {
-                    return new LoginResponse("Login Failed",false,null,null);
-                }
-            }else {
-                return new LoginResponse("Password not Matching",false,null,null);
-            }
-        }else {
-            return new LoginResponse("Email not Exists",false,null,null);
-        }
-    }
+//    public LoginResponse loginClient(LoginDTO loginDTO){
+//        String msg="";
+//        Client client = clientRepo.findByEmail(loginDTO.getEmail());
+//        if (client!=null){
+//            String password = loginDTO.getPassword();
+//            String encodedPassword = client.getPassword();
+//            boolean isPwdRight = passwordEncoder.matches(password,encodedPassword);
+//            if (isPwdRight){
+//                Client client1 = clientRepo.findOneByEmailAndPassword(loginDTO.getEmail(), encodedPassword);
+//                if (client1!=null){
+//                    ClientDTO clientDTO=modelMapper.map(client1,new TypeToken<ClientDTO>(){}.getType());
+//                    return new LoginResponse("Login Success",true, clientDTO,null);
+//                }else {
+//                    return new LoginResponse("Login Failed",false,null,null);
+//                }
+//            }else {
+//                return new LoginResponse("Password not Matching",false,null,null);
+//            }
+//        }else {
+//            return new LoginResponse("Email not Exists",false,null,null);
+//        }
+//    }
 }

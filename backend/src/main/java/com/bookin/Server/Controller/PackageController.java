@@ -1,2 +1,4 @@
-package com.bookin.Server.Controller;public class PackageController {
+package com.bookin.Server.Controller;
+
+public class PackageController {
 }

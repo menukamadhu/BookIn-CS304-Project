@@ -1,10 +1,7 @@
 package com.bookin.Server.Entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,15 +10,18 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Table(name = "Package")
-public class Package {
+@Entity
+public class Packages {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int packageId;
     private String packageName;
     private String packagePrice;
 
-//    @JsonIgnore
-//    @ManyToOne(cascade = CascadeType.MERGE)
-//    @JoinColumn(name = "salonId", referencedColumnName = "salonID")
-//    private Salon salon;
+    @JsonIgnore
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "salonId", referencedColumnName = "salonID")
+    private Salon salon;
 
 
 

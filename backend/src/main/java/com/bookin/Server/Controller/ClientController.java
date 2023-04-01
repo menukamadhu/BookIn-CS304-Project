@@ -146,9 +146,4 @@ public class ClientController {
             return new ResponseEntity(responseDTO, HttpStatus.BAD_REQUEST);
         }
     }
-    @PostMapping(value = "/loginClient")
-    public ResponseEntity<?> loginClient(@RequestBody LoginDTO loginDTO){
-        LoginResponse loginResponse = clientService.loginClient(loginDTO);
-        return ResponseEntity.ok(loginResponse);
-    }
 }

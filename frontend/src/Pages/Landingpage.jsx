@@ -6,6 +6,7 @@ import Time from "../Assets/Time.png";
 import RegisterModal from "../Components/RegisterModal";
 import { Link, useNavigate } from "react-router-dom";
 import Header from "../Components/Header";
+import SalonProfile from "./SalonProfile";
 
 const Landingpage = () => {
   const [ShowModal, setShowModal] = useState(false);
@@ -16,11 +17,11 @@ const Landingpage = () => {
     let logged = localStorage.getItem("loggedUser");
     if (logged) {
       const user1 = JSON.parse(logged);
-      //   if (user1 != null) {
-      //     navigate("/UserHome");
-      //   } else {
-      //     navigate("/SalonProfile");
-      //   }
+      if (user1 != null) {
+        navigate("/UserHome");
+      } else {
+        navigate("/SalonProfile");
+      }
     }
   }, [localStorage.getItem("loggedUser")]);
   return (
@@ -48,8 +49,10 @@ const Landingpage = () => {
                   Free online Appointment scheduling software with Payments,
                   Invoicing, Sales, Reporting, Customer & Team management.
                 </p>
-                <div onClick={() => setShowModal(true)}>
-                  <Button>Get Started</Button>
+                <div>
+                  <Link to="/Login">
+                    <Button>Get Start</Button>
+                  </Link>
                 </div>
               </div>
             </div>

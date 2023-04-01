@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Welcome from "../Assets/Welcome.jpg";
 import Logo from "../Assets/Logo.png";
 import Button from "../Components/Button";
@@ -8,6 +8,8 @@ import { useForm } from "react-hook-form";
 import AuthenticationServices from "../Services/AuthenticationServices";
 import { useNavigate } from "react-router-dom";
 import SalonProfile from "./SalonProfile";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Login = () => {
   const [ShowModal, setShowModal] = useState(false);
@@ -44,6 +46,7 @@ const Login = () => {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm();
 
   const onSubmit = async (data, e) => {
@@ -52,43 +55,26 @@ const Login = () => {
       email: data.email,
       password: data.password,
     };
-    // console.log(user);
-    const result = await AuthenticationServices.loginClient(user);
-    if (result.data.client != null) {
-      console.log("Hello");
-      if (result.data.status == true) {
-        localStorage.setItem(
-          "loggedUser",
-          JSON.stringify({
-            clientId: result.data.client.clientId,
-            firstName: result.data.client.firstName,
-            lastName: result.data.client.lastName,
-            email: result.data.client.email,
-            contactNum: result.data.client.contactNum,
-            gender: result.data.client.gender,
-          })
-        );
-        navigate("/UserHome");
-      } else {
-        alert("Incorrect E-mail or Password");
-      }
-    } else {
-      const result1 = await AuthenticationServices.loginSalon(user);
-      if (result1.data.status == true) {
-        localStorage.setItem(
-          "loggedUser",
-          JSON.stringify({
-            salontId: result.data.salon.salontId,
-            name: result.data.salon.name,
-            email: result.data.salon.email,
-            contactNum: result.data.salon.contactNum,
-            district: result.data.salon.district,
-          })
-        );
+    const result = await AuthenticationServices.userLogin(user);
+    if (result.data.status == true) {
+      localStorage.setItem(
+        "loggedUser",
+        JSON.stringify({
+          email: result.data.loginDTO.email,
+          role: result.data.loginDTO.role,
+          userId: result.data.loginDTO.id,
+        })
+      );
+      if (result.data.loginDTO.role == "Salon") {
         navigate("/SalonProfile");
       } else {
-        alert("Incorrect E-mail of Password");
+        navigate("/UserHome");
       }
+    } else {
+      toast.error("Incorrect E-mail or Password!");
+      setTimeout(async () => {
+        e.target.reset();
+      }, 4000);
     }
   };
 
@@ -228,7 +214,7 @@ const Login = () => {
                   <button
                     className="px-8 bg-blue-600 btn btn-accent hover:bg-blue-700"
                     type="submit"
-                    // onClick={SalonProfile}
+                    // onClick={handleReset}
                   >
                     Login
                   </button>

@@ -17,8 +17,28 @@ const Nav = () => {
   const [ShowModal, setShowModal] = useState(false);
   const handleOnClose = () => setShowModal(false);
 
+  const [isSticky, setSticky] = useState(false);
+
+  const handleScroll = () => {
+    if (window.scrollY > 0) {
+      setSticky(true);
+    } else {
+      setSticky(false);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return (
-    <div className="sticky top-0 left-0 z-50 w-full bg-slate-100">
+    <div
+      className={`w-full bg-slate-100 ${
+        isSticky ? "fixed top-0 left-0 z-50" : ""
+      }`}>
       <div className="items-center justify-between py-2 md:flex md:px-72 px-7">
         <div className="cursor-pointer">
           <span className="">

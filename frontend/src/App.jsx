@@ -15,7 +15,8 @@ import {
 import SalonProfile from "./Pages/SalonProfile";
 import UserHome from "./Pages/UserHome";
 import Header from "./Components/Header";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   return (
@@ -34,7 +35,7 @@ function App() {
         limit={1}
       />
       {/* Same as */}
-      <ToastContainer />
+      {/* <ToastContainer /> */}
 
       <BrowserRouter>
         <Routes>
