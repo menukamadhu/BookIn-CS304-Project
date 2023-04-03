@@ -17,6 +17,8 @@ import UserHome from "./Pages/UserHome";
 import Header from "./Components/Header";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ProfileS from "./Pages/ProfileS";
+import ProfileC from "./Pages/ProfileC";
 
 function App() {
   return (
@@ -45,6 +47,8 @@ function App() {
           <Route path="/ClientRegister" element={<ClientRegister />} />
           <Route path="/SalonProfile" element={<SalonProfile />} />
           <Route path="/UserHome" element={<UserHome />} />
+          <Route path="/ProfileS" element={<ProfileS />} />
+          <Route path="/ProfileC" element={<ProfileC />} />
         </Routes>
       </BrowserRouter>
     </div>

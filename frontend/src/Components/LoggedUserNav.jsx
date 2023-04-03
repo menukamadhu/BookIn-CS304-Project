@@ -1,7 +1,12 @@
+import { getByRole } from "@testing-library/react";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Logo from "../Assets/Logo.png";
+import AuthenticationServices from "../Services/AuthenticationServices";
+import { Avatar } from "@mui/material";
+import { blue } from "@mui/material/colors";
+
 function LoggedUserNav({ setUser }) {
   const navigate = useNavigate();
   const handleLogout = () => {
@@ -19,13 +24,6 @@ function LoggedUserNav({ setUser }) {
     }
   };
 
-  const [clicked, setClicked] = useState(false);
-
-  const handleClick = () => {
-    setClicked(true);
-    // perform other actions
-  };
-
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
     return () => {
@@ -33,13 +31,28 @@ function LoggedUserNav({ setUser }) {
     };
   }, []);
 
+  const [role, setRole] = useState("");
+
+  useEffect(() => {
+    const dataFromLocalStorage = localStorage.getItem("loggedUser");
+    const parseData = JSON.parse(dataFromLocalStorage);
+    const roleFromData = parseData?.role;
+    setRole(roleFromData);
+  }, []);
+  const onNavigate = () => {
+    if (role == "Salon") {
+      navigate("/ProfileS");
+    } else {
+      navigate("/SalonC");
+    }
+  };
   return (
     <div
-      className={`w-full bg-slate-100 ${
+      className={`md:w-100% bg-slate-100 w-full ${
         isSticky ? "fixed top-0 left-0 z-50" : ""
       }`}>
       <div className="items-center justify-between py-2 md:flex md:px-72 px-7">
-        <div className="cursor-pointer">
+        <div className="flex items-center justify-center cursor-pointer">
           <span className="">
             <Link to="/">
               <a>
@@ -48,26 +61,29 @@ function LoggedUserNav({ setUser }) {
             </Link>
           </span>
         </div>
-        <div className="flex flex-row gap-8">
+        <div className="flex flex-row items-center justify-center gap-8 p-4">
           <div className="form-control">
             <input
               type="text"
               placeholder="Search"
-              className="w-full bg-white border-2 border-gray-300 rounded-none input input-bordered"
+              className="w-full bg-white border-2 border-gray-300 rounded-3xl input input-bordered "
             />
           </div>
           <div className="dropdown dropdown-end">
             <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
-              <div className="w-10 rounded-full">
-                <img src="/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+              <div>
+                <Avatar sx={{ bgcolor: blue[600] }} />
               </div>
             </label>
             <ul
               tabIndex={0}
-              className="p-2 mt-3 bg-white shadow menu menu-compact dropdown-content rounded-box w-52">
+              className="p-2 mt-3 text-gray-800 bg-white shadow menu menu-compact dropdown-content rounded-box w-52">
               <li>
-                <a className="justify-between}" onClick={handleClick}>
-                  Edit Profile
+                <a>Profile</a>
+              </li>
+              <li>
+                <a className="justify-between}" onClick={onNavigate}>
+                  My account
                   {/* <span className="badge">New</span> */}
                 </a>
               </li>

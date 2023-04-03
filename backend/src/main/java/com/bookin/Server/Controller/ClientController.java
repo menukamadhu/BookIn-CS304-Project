@@ -19,7 +19,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin("http://localhost:3000")
-@RequestMapping("/register")
+@RequestMapping("/client")
 public class ClientController {
     @Autowired
     private ClientService clientService;
@@ -101,10 +101,10 @@ public class ClientController {
             return new ResponseEntity(responseDTO, HttpStatus.BAD_REQUEST);
         }
     }
-    @GetMapping(value = "/searchClient{clientID}")
-    public ResponseEntity searchClient(@PathVariable int clientID){
+    @GetMapping(value = "/getClient/{clientID}")
+    public ResponseEntity getClientById(@PathVariable int clientID){
         try{
-            ClientDTO clientDTO = clientService.searchClient(clientID);
+            ClientDTO clientDTO = clientService.getClientById(clientID);
             if (clientDTO!=null){
                 responseDTO.setCode(VarList.RSP_SUCCESS);
                 responseDTO.setMessage("Success");

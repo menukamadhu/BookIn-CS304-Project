@@ -1,5 +1,6 @@
 package com.bookin.Server.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,4 +19,9 @@ public class Login {
     private String password;
     private String role;
     private int id;
+
+//    @JsonIgnore
+//    @OneToOne(cascade = CascadeType.MERGE)
+//    @JoinColumn(name = "id", referencedColumnName = "SalonID")
+//    private Salon salon;
 }

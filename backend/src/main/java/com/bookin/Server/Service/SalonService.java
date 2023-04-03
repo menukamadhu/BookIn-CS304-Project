@@ -5,6 +5,7 @@ import com.bookin.Server.Dto.SalonDTO;
 import com.bookin.Server.Entity.Login;
 import com.bookin.Server.Entity.Packages;
 import com.bookin.Server.Entity.Salon;
+import com.bookin.Server.Repository.LoginRepo;
 import com.bookin.Server.Repository.SalonRepo;
 import com.bookin.Server.Response.LoginResponse;
 import com.bookin.Server.Util.VarList;
@@ -30,7 +31,8 @@ public class SalonService {
     private ModelMapper modelMapper;
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
-
+    @Autowired
+    private LoginRepo loginRepo;
     @Autowired
     private LoginService loginService;
     public SalonDTO registerSalon(SalonDTO salonDTO){
@@ -75,7 +77,7 @@ public class SalonService {
 
         }.getType());
     }
-    public SalonDTO searchSalon(int salonID){
+    public SalonDTO getSalonById(int salonID){
         if (salonRepo.existsById(salonID)){
             Salon salon = salonRepo.findById(salonID).orElse(null );
             return modelMapper.map(salon, SalonDTO.class);
@@ -91,6 +93,12 @@ public class SalonService {
             return VarList.RSP_NO_DATA_FOUND;
         }
     }
+
+//    public SalonDTO getSalonBySalonID(int salonID){
+//        Login login = loginRepo.findBySalonSalonID(salonID);
+//        SalonDTO salonDTO = modelMapper.map(login.getSalon(),SalonDTO.class);
+//        return salonDTO;
+//    }
 //    public LoginResponse loginSalon(LoginDTO loginDTO){
 //        String msg = "";
 //        Salon salon = salonRepo.findByEmail(loginDTO.getEmail());

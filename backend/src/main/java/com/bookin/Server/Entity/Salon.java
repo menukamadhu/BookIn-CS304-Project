@@ -24,4 +24,7 @@ public class Salon {
 
     @OneToMany(mappedBy = "salon" , cascade = CascadeType.REMOVE)
     private List<Packages> packages;
+
+//    @OneToOne(mappedBy = "salon",cascade = CascadeType.REMOVE)
+//    private List<Login> login;
 }

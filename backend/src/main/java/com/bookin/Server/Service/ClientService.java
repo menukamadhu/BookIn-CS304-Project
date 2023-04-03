@@ -77,7 +77,7 @@ public class ClientService {
         List<Client> clientsList = clientRepo.findAll();
         return modelMapper.map(clientsList, new TypeToken<ArrayList<ClientDTO>>(){}.getType());
     }
-    public ClientDTO searchClient(int clientID){
+    public ClientDTO getClientById(int clientID){
         if (clientRepo.existsById(clientID)){
             Client client = clientRepo.findById(clientID).orElse(null);
             return modelMapper.map(client, ClientDTO.class);

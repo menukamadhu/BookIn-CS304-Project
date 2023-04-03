@@ -16,7 +16,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin("http://localhost:3000")
-@RequestMapping("/register")
+@RequestMapping("/salon")
 public class SalonController {
 
     @Autowired
@@ -95,10 +95,10 @@ public class SalonController {
         }
     }
 
-    @GetMapping(value = "/searchSalon/{salonID}")
-    public ResponseEntity searchSalon(@PathVariable int salonID){
+    @GetMapping(value = "/getSalon/{salonID}")
+    public ResponseEntity getSalonById(@PathVariable int salonID){
         try {
-            SalonDTO salonDTO = salonService.searchSalon(salonID);
+            SalonDTO salonDTO = salonService.getSalonById(salonID);
             if (salonDTO!=null){
                 responseDTO.setCode(VarList.RSP_SUCCESS);
                 responseDTO.setMessage("Success");
