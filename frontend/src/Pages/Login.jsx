@@ -213,9 +213,7 @@ const Login = () => {
                 <div className="flex items-center justify-center pt-8">
                   <button
                     className="px-8 bg-blue-600 btn btn-accent hover:bg-blue-700"
-                    type="submit"
-                    // onClick={handleReset}
-                  >
+                    type="submit">
                     Login
                   </button>
                 </div>
