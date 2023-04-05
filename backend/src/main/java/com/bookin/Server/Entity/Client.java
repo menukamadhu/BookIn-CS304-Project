@@ -21,4 +21,7 @@ public class Client {
     private String contactNum;
     private String password;
 
+//    @OneToOne(mappedBy = "client",cascade = CascadeType.REMOVE)
+//    private Login login;
+
 }

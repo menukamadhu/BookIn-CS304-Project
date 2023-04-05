@@ -26,5 +26,5 @@ public class Salon {
     private List<Packages> packages;
 
 //    @OneToOne(mappedBy = "salon",cascade = CascadeType.REMOVE)
-//    private List<Login> login;
+//    private Login login;
 }

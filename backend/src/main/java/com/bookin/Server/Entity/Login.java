@@ -22,6 +22,11 @@ public class Login {
 
 //    @JsonIgnore
 //    @OneToOne(cascade = CascadeType.MERGE)
-//    @JoinColumn(name = "id", referencedColumnName = "SalonID")
+//    @JoinColumn(name = "id", referencedColumnName = "salonID")
 //    private Salon salon;
+//
+//    @JsonIgnore
+//    @OneToOne(cascade = CascadeType.MERGE)
+//    @JoinColumn(name = "id", referencedColumnName = "clientID")
+//    private Client client;
 }

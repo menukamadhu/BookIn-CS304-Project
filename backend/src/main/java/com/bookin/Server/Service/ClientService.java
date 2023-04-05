@@ -41,16 +41,15 @@ public class ClientService {
         if (client1!=null){
             return null;
         }else {
-            Client client = new Client(
+            Client client = new Client();
 
-                    clientDTO.getClientID(),
-                    clientDTO.getFirstName(),
-                    clientDTO.getLastName(),
-                    clientDTO.getEmail(),
-                    clientDTO.getGender(),
-                    clientDTO.getContactNum(),
-                    this.passwordEncoder.encode(clientDTO.getPassword())
-            );
+                    client.setClientID(clientDTO.getClientID());
+                    client.setFirstName(clientDTO.getFirstName());
+                    client.setLastName(clientDTO.getLastName());
+                    client.setEmail(clientDTO.getEmail());
+                    client.setGender(clientDTO.getGender());
+                    client.setContactNum(clientDTO.getContactNum());
+                    client.setPassword(passwordEncoder.encode(clientDTO.getPassword()));
             Client c = clientRepo.save(client);
 
             if (c!=null){

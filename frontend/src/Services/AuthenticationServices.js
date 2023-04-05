@@ -35,7 +35,7 @@ const RegisterClient = async (data) => {
   return response;
 };
 
-// Get Salon details
+// Get Salon
 const GetSalonDetails = async (salonID) => {
   const response = await axios({
     method: "get",
@@ -45,11 +45,53 @@ const GetSalonDetails = async (salonID) => {
   return response;
 };
 
-// Get Client details
+// Get Client
 const GetClientDetails = async (clientID) => {
   const response = await axios({
     method: "get",
     url: `http://localhost:8080/client/getClient/${clientID}`,
+    headers: { "Content-Type": "application/json; charset=utf-8" },
+  });
+  return response;
+};
+
+// Update Salon
+const UpdateSalon = async (data) => {
+  const response = await axios({
+    method: "put",
+    url: `http://localhost:8080/salon/updateSalon`,
+    data: data,
+    headers: { "Content-Type": "application/json; charset=utf-8" },
+  });
+  return response;
+};
+
+// Update Client
+const UpdateClient = async (data) => {
+  const response = await axios({
+    method: "put",
+    url: `http://localhost:8080/client/updateClient`,
+    data: data,
+    headers: { "Content-Type": "application/json; charset=utf-8" },
+  });
+  return response;
+};
+
+// Delete Salon
+const DeleteSalon = async (salonID) => {
+  const response = await axios({
+    method: "delete",
+    url: `http://localhost:8080/salon/deleteSalon/${salonID}`,
+    headers: { "Content-Type": "application/json; charset=utf-8" },
+  });
+  return response;
+};
+
+// Delete Client
+const DeleteClient = async (clientID) => {
+  const response = await axios({
+    method: "delete",
+    url: `http://localhost:8080/client/deleteClient/${clientID}`,
     headers: { "Content-Type": "application/json; charset=utf-8" },
   });
   return response;
@@ -61,6 +103,10 @@ const AuthenticationServices = {
   RegisterClient,
   GetSalonDetails,
   GetClientDetails,
+  UpdateSalon,
+  UpdateClient,
+  DeleteSalon,
+  DeleteClient,
 };
 
 export default AuthenticationServices;
