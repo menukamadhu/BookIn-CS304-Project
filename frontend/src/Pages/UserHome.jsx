@@ -6,6 +6,12 @@ import { useState } from "react";
 import { useEffect } from "react";
 import AuthenticationServices from "../Services/AuthenticationServices";
 import SalonL from "../Assets/SalonL.jpg";
+import { styled } from "@mui/material/styles";
+import Box from "@mui/material/Box";
+import Rating from "@mui/material/Rating";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import Typography from "@mui/material/Typography";
 
 const UserHome = () => {
   const navigate = useNavigate();
@@ -20,6 +26,16 @@ const UserHome = () => {
     });
   }, []);
 
+  // Rating
+  const StyledRating = styled(Rating)({
+    "& .MuiRating-iconFilled": {
+      color: "#ff6d75",
+    },
+    "& .MuiRating-iconHover": {
+      color: "#ff3d47",
+    },
+  });
+
   return (
     <div className="bg-white">
       <Header />
@@ -29,7 +45,7 @@ const UserHome = () => {
           <div key={salon.salonID}>
             {/* Card */}
             <div className="">
-              <div className="w-screen m-2 shadow-xl md:m-4 md:w-full h-60 card lg:card-side bg-slate-200">
+              <div className="w-screen h-full m-2 shadow-xl md:m-4 md:w-full md:h-60 card lg:card-side bg-slate-200">
                 <div className="flex items-start justify-start bg-blue-600 rounded-r-none rounded-2xl">
                   <figure>
                     <img
@@ -46,10 +62,24 @@ const UserHome = () => {
                   <p className="text-2xl text-purple-600">{salon.type}</p>
                   <p className="text-sm">{salon.district}</p>
                   <p>{salon.contactNum}</p>
-                  <div className="justify-end card-actions">
-                    <button className="px-8 bg-blue-600 border-none btn btn-primary hover:bg-blue-700">
-                      View Salon
-                    </button>
+                  <div className="flex flex-col md:gap-20 md:flex-row">
+                    <div className="flex items-center">
+                      <StyledRating
+                        name="customized-color"
+                        defaultValue={2}
+                        getLabelText={(value) =>
+                          `${value} Heart${value !== 1 ? "s" : ""}`
+                        }
+                        precision={0.5}
+                        icon={<FavoriteIcon fontSize="inherit" />}
+                        emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
+                      />
+                    </div>
+                    <div className="justify-end card-actions">
+                      <button className="px-8 bg-blue-600 border-none btn btn-primary hover:bg-blue-700">
+                        View Salon
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>

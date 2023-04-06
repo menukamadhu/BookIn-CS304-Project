@@ -10,5 +10,8 @@ import lombok.NoArgsConstructor;
 public class PackageDTO {
     private int packageId;
     private String packageName;
+    private int duration;
+    private String add_ons;
+    private String add_onsType;
     private String packagePrice;
 }

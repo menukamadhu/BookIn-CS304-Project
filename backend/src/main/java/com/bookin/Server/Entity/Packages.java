@@ -16,6 +16,9 @@ public class Packages {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int packageId;
     private String packageName;
+    private int duration;
+    private String add_ons;
+    private String add_onsType;
     private String packagePrice;
 
     @JsonIgnore
