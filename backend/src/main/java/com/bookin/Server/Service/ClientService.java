@@ -92,26 +92,4 @@ public class ClientService {
             return VarList.RSP_NO_DATA_FOUND;
         }
     }
-//    public LoginResponse loginClient(LoginDTO loginDTO){
-//        String msg="";
-//        Client client = clientRepo.findByEmail(loginDTO.getEmail());
-//        if (client!=null){
-//            String password = loginDTO.getPassword();
-//            String encodedPassword = client.getPassword();
-//            boolean isPwdRight = passwordEncoder.matches(password,encodedPassword);
-//            if (isPwdRight){
-//                Client client1 = clientRepo.findOneByEmailAndPassword(loginDTO.getEmail(), encodedPassword);
-//                if (client1!=null){
-//                    ClientDTO clientDTO=modelMapper.map(client1,new TypeToken<ClientDTO>(){}.getType());
-//                    return new LoginResponse("Login Success",true, clientDTO,null);
-//                }else {
-//                    return new LoginResponse("Login Failed",false,null,null);
-//                }
-//            }else {
-//                return new LoginResponse("Password not Matching",false,null,null);
-//            }
-//        }else {
-//            return new LoginResponse("Email not Exists",false,null,null);
-//        }
-//    }
 }

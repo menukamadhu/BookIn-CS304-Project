@@ -57,7 +57,7 @@ public class ClientController {
         }
     }
 
-    @PostMapping(value = "/updateClient")
+    @PutMapping(value = "/updateClient")
     public ResponseEntity updateClient(@RequestBody ClientDTO clientDTO){
         try {
             String res = clientService.updateClient(clientDTO);
@@ -124,11 +124,11 @@ public class ClientController {
         }
     }
 
-    @DeleteMapping(value = "/deleteClient{clientID}")
+    @DeleteMapping(value = "/deleteClient/{clientID}")
     public ResponseEntity deleteClient(@PathVariable int clientID){
         try {
             String res = clientService.deleteClient(clientID);
-            if (res != "00"){
+            if (res.equals("00")){
                 responseDTO.setCode(VarList.RSP_SUCCESS);
                 responseDTO.setMessage("Success");
                 responseDTO.setContent(true);

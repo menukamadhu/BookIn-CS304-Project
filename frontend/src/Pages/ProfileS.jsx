@@ -120,7 +120,7 @@ const ProfileS = () => {
       console.log(result);
       if (result.data.code === "00") {
         console.log(result.data.content);
-        toast.success("Save changes successfully!");
+        toast.success("Your Details have been changed successfully!");
         setTimeout(async () => {
           setOpen(false);
           window.location.reload();

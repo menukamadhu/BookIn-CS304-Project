@@ -99,7 +99,14 @@ const DeleteClient = async (clientID) => {
 
 // Get all Salons
 const GetAllSalons = async () => {
-  return Http.get < any > "/salon/getAllSalons";
+  const response = await axios({
+    method: "get",
+    url: `http://localhost:8080/salon/getAllSalons`,
+    // data: data,
+    headers: { "Content-Type": "application/json; charset=utf-8" },
+  });
+  return response;
+  // return Http.get < any > "";
 };
 
 const AuthenticationServices = {

@@ -43,12 +43,12 @@ function LoggedUserNav({ setUser }) {
     if (role == "Salon") {
       navigate("/ProfileS");
     } else {
-      navigate("/SalonC");
+      navigate("/ProfileC");
     }
   };
   return (
     <div
-      className={`md:w-100% bg-slate-100 w-full ${
+      className={`md:w-100% bg-slate-100 w-screen ${
         isSticky ? "fixed top-0 left-0 z-50" : ""
       }`}>
       <div className="items-center justify-between py-2 md:flex md:px-72 px-7">

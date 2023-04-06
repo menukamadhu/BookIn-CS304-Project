@@ -93,34 +93,4 @@ public class SalonService {
             return VarList.RSP_NO_DATA_FOUND;
         }
     }
-
-//    public SalonDTO getSalonBySalonID(int salonID){
-//        Login login = loginRepo.findBySalonSalonID(salonID);
-//        SalonDTO salonDTO = modelMapper.map(login.getSalon(),SalonDTO.class);
-//        return salonDTO;
-//    }
-//    public LoginResponse loginSalon(LoginDTO loginDTO){
-//        String msg = "";
-//        Salon salon = salonRepo.findByEmail(loginDTO.getEmail());
-////        System.out.println(salon.getSalonID());
-//        if(salon!=null){
-////            System.out.println("hello world");
-//            String password = loginDTO.getPassword();
-//            String encodedPassword = salon.getPassword();
-//            boolean isPwdRight = passwordEncoder.matches(password,encodedPassword);
-//            if (isPwdRight){
-//                Salon salon1 = salonRepo.findOneByEmailAndPassword(loginDTO.getEmail(), encodedPassword);
-//                if (salon1!=null){
-//                    SalonDTO salonDTO=modelMapper.map(salon1, new TypeToken<SalonDTO>(){}.getType());
-//                    return new LoginResponse("Login Success",true,null,salonDTO);
-//                }else {
-//                    return new LoginResponse("Login Failed",false,null,null);
-//                }
-//            }else {
-//                return new LoginResponse("Password not matching",false,null,null);
-//            }
-//        }else {
-//            return new LoginResponse("Email not exist",false,null,null);
-//        }
-//    }
 }
