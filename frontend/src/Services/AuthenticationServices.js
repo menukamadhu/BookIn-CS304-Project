@@ -97,6 +97,11 @@ const DeleteClient = async (clientID) => {
   return response;
 };
 
+// Get all Salons
+const GetAllSalons = async () => {
+  return Http.get < any > "/salon/getAllSalons";
+};
+
 const AuthenticationServices = {
   userLogin,
   Register,
@@ -107,6 +112,7 @@ const AuthenticationServices = {
   UpdateClient,
   DeleteSalon,
   DeleteClient,
+  GetAllSalons,
 };
 
 export default AuthenticationServices;
