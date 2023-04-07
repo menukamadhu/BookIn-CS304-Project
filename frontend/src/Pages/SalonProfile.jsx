@@ -48,11 +48,22 @@ const SalonProfile = () => {
         ) : error ? (
           <p>{error}</p>
         ) : salonDetials ? (
-          <h1 className="flex items-center justify-center text-5xl font-bold text-blue-600 md:text-6xl">
-            Hello {salonDetials.name}
-          </h1>
+          <div>
+            <div className="flex flex-col items-center justify-center gap-4 pb-10 md:flex-row">
+              <h1 className="text-5xl font-bold text-blue-500 md:text-6xl">
+                Hello
+              </h1>
+              <h1 className="text-5xl font-bold text-blue-700 md:text-6xl">
+                {salonDetials.name}
+              </h1>
+            </div>
+            {/* Tabs */}
+            <div></div>
+          </div>
         ) : (
-          <p>No salon details found.</p>
+          <p className="text-5xl font-bold text-red-700 md:text-6xl">
+            Your Account has been Deleted.
+          </p>
         )}
       </div>
       <Footer />
