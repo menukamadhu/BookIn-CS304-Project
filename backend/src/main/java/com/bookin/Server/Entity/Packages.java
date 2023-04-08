@@ -4,17 +4,19 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
 @Data
 @Table(name = "Package")
 @Entity
 public class Packages {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int packageId;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int packageId ;
     private String packageName;
     private int duration;
     private String add_ons;
