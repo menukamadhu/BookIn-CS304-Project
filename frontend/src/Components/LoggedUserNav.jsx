@@ -46,6 +46,14 @@ function LoggedUserNav({ setUser }) {
       navigate("/ProfileC");
     }
   };
+
+  const onLink = () => {
+    if (role == "Salon") {
+      navigate("/SalonProfile");
+    } else {
+      navigate("/UserHome");
+    }
+  };
   return (
     <div
       className={`md:w-100% bg-slate-100 w-screen ${
@@ -54,11 +62,9 @@ function LoggedUserNav({ setUser }) {
       <div className="items-center justify-between py-2 md:flex md:px-72 px-7">
         <div className="flex items-center justify-center cursor-pointer">
           <span className="">
-            <Link to="/">
-              <a>
-                <img className="h-24" src={Logo} alt="" />
-              </a>
-            </Link>
+            <a onClick={onLink}>
+              <img className="h-24" src={Logo} alt="" />
+            </a>
           </span>
         </div>
         <div className="flex flex-row items-center justify-center gap-8 p-4">
