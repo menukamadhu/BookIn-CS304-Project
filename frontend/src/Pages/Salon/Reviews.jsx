@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
-import Header from "../Components/Header";
-import Footer from "../Components/Footer";
+import Header from "../../Components/Header";
+import Footer from "../../Components/Footer";
 import { Link, useNavigate } from "react-router-dom";
-import ProfileS from "./ProfileS";
-import AuthenticationServices from "../Services/AuthenticationServices";
+import AuthenticationServices from "../../Services/AuthenticationServices";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
@@ -14,7 +13,7 @@ import SpeedDialAction from "@mui/material/SpeedDialAction";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
 import ListIcon from "@mui/icons-material/List";
 
-const SalonProfile = () => {
+const Reviews = () => {
   const navigate = useNavigate();
   const [user, SetUser] = useState();
   const [salonId, setSalonId] = useState("");
@@ -208,11 +207,16 @@ const SalonProfile = () => {
                   textColor="primary"
                   indicatorColor="primary"
                   aria-label="primary tabs example">
-                  <Tab value="one" label="Packages" />
+                  <Tab value="five" label="Reviews" />
                 </Tabs>
               </div>
               <div className="hidden md:block">
-                <Tabs>
+                <Tabs
+                  value={value}
+                  onChange={handleChange}
+                  textColor="primary"
+                  indicatorColor="primary"
+                  aria-label="primary tabs example">
                   <Link to="/SalonProfile">
                     <Tab
                       onChange={handleChange}
@@ -286,23 +290,6 @@ const SalonProfile = () => {
                 </Tabs>
               </div>
             </div>
-            {/* Speed Dial */}
-            <div>
-              <div className="">
-                <SpeedDial
-                  ariaLabel="SpeedDial basic example"
-                  sx={{ position: "fixed", bottom: 20, right: 20 }}
-                  icon={<SpeedDialIcon />}>
-                  {actions.map((action) => (
-                    <SpeedDialAction
-                      key={action.name}
-                      icon={action.icon}
-                      tooltipTitle={action.name}
-                    />
-                  ))}
-                </SpeedDial>
-              </div>
-            </div>
           </div>
         ) : (
           <p className="text-5xl font-bold text-red-700 md:text-6xl">
@@ -315,4 +302,4 @@ const SalonProfile = () => {
   );
 };
 
-export default SalonProfile;
+export default Reviews;

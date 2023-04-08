@@ -19,6 +19,12 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ProfileS from "./Pages/ProfileS";
 import ProfileC from "./Pages/ProfileC";
+import Appoinment from "./Pages/Salon/Appoinment";
+import Reviews from "./Pages/Salon/Reviews";
+import Completed from "./Pages/Salon/Completed";
+import Uploads from "./Pages/Salon/Uploads";
+import WorkDays from "./Pages/Salon/WorkDays";
+import WorkHours from "./Pages/Salon/WorkHours";
 
 function App() {
   return (
@@ -49,6 +55,12 @@ function App() {
           <Route path="/UserHome" element={<UserHome />} />
           <Route path="/ProfileS" element={<ProfileS />} />
           <Route path="/ProfileC" element={<ProfileC />} />
+          <Route path="/Appoinment" element={<Appoinment />} />
+          <Route path="/Completed" element={<Completed />} />
+          <Route path="/Reviews" element={<Reviews />} />
+          <Route path="/Uploads" element={<Uploads />} />
+          <Route path="/WorkDays" element={<WorkDays />} />
+          <Route path="/WorkHours" element={<WorkHours />} />
         </Routes>
       </BrowserRouter>
     </div>
