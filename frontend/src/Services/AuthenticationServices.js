@@ -109,6 +109,29 @@ const GetAllSalons = async () => {
   // return Http.get < any > "";
 };
 
+// add a Package
+const AddPackage = async (data) => {
+  console.log("data", data);
+  const response = await axios({
+    method: "post",
+    url: `http://localhost:8080/salon/package/addPackage`,
+    data: data,
+    headers: { "Content-Type": "application/json; charset=utf-8" },
+  });
+  return response;
+};
+
+// get packages by salon Id
+const GetPackagesBySalon = async (salonID) => {
+  const response = await axios({
+    method: "get",
+    url: `http://localhost:8080/salon/getPackagesBySalonId/${salonID}`,
+    headers: { "Content-Type": "application/json; charset=utf-8" },
+  });
+  console.log("data", salonID);
+  return response;
+};
+
 const AuthenticationServices = {
   userLogin,
   Register,
@@ -120,6 +143,8 @@ const AuthenticationServices = {
   DeleteSalon,
   DeleteClient,
   GetAllSalons,
+  AddPackage,
+  GetPackagesBySalon,
 };
 
 export default AuthenticationServices;

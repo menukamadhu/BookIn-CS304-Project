@@ -85,6 +85,10 @@ public class SalonService {
             return null;
         }
     }
+    public SalonDTO getSalonByName(String name){
+        Salon salon = salonRepo.findByName(name);
+        return modelMapper.map(salon,new TypeToken<SalonDTO>(){}.getType());
+    }
     public String deleteSalon(int salonID){
         if (salonRepo.existsById(salonID)){
             salonRepo.deleteById(salonID);

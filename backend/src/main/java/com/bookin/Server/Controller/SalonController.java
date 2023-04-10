@@ -117,6 +117,28 @@ public class SalonController {
             return new ResponseEntity(responseDTO,HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    @GetMapping(value = "/getSalonByName/{name}")
+    public ResponseEntity getSalonByName(@PathVariable String name){
+        try {
+            SalonDTO salonDTO = salonService.getSalonByName(name);
+            if (salonDTO!=null){
+                responseDTO.setCode(VarList.RSP_SUCCESS);
+                responseDTO.setMessage("Success");
+                responseDTO.setContent(salonDTO);
+                return new ResponseEntity(responseDTO, HttpStatus.ACCEPTED);
+            }else {
+                responseDTO.setCode(VarList.RSP_NO_DATA_FOUND);
+                responseDTO.setMessage("No Salon available for this ID");
+                responseDTO.setContent(null);
+                return new ResponseEntity(responseDTO,HttpStatus.BAD_REQUEST);
+            }
+        }catch (Exception e){
+            responseDTO.setCode(VarList.RSP_ERROR);
+            responseDTO.setMessage(e.getMessage());
+            responseDTO.setContent(null);
+            return new ResponseEntity(responseDTO,HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
     @DeleteMapping(value = "/deleteSalon/{salonID}")
     public ResponseEntity deleteSalon(@PathVariable int salonID){
         try {

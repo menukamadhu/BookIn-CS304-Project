@@ -5,6 +5,7 @@ import com.bookin.Server.Dto.SalonDTO;
 import com.bookin.Server.Entity.Packages;
 import com.bookin.Server.Entity.Salon;
 import com.bookin.Server.Repository.PackageRepo;
+import com.bookin.Server.Util.VarList;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
@@ -45,5 +46,23 @@ public class PackageService {
         return modelMapper.map(list, new TypeToken<List<PackageDTO>>(){}.getType());
     }
 
+    public PackageDTO getPackageById(int packageId){
+        Packages packages = packageRepo.findById(packageId);
+        return modelMapper.map(packages, new TypeToken<PackageDTO>(){}.getType());
+    }
 
+    public PackageDTO getPackageByName(String packageName){
+        Packages packages = packageRepo.findByPackageName(packageName);
+        return  modelMapper.map(packages, new TypeToken<PackageDTO>(){}.getType());
+    }
+
+    public String updatePackage(PackageDTO packageDTO){
+        packageRepo.save(modelMapper.map(packageDTO, Packages.class));
+        return VarList.RSP_SUCCESS;
+    }
+
+    public String deletePackage(int packageId){
+        packageRepo.deleteById(packageId);
+        return VarList.RSP_SUCCESS;
+    }
 }

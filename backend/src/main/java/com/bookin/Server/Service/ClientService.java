@@ -7,6 +7,7 @@ import com.bookin.Server.Entity.Client;
 import com.bookin.Server.Entity.Login;
 import com.bookin.Server.Entity.Salon;
 import com.bookin.Server.Repository.ClientRepo;
+import com.bookin.Server.Repository.SalonRepo;
 import com.bookin.Server.Response.LoginResponse;
 import com.bookin.Server.Util.VarList;
 import jakarta.transaction.Transactional;
@@ -36,6 +37,9 @@ public class ClientService {
     private BCryptPasswordEncoder passwordEncoder;
     @Autowired
     LoginService loginService;
+    @Autowired
+    private SalonRepo salonRepo;
+
     public ClientDTO registerClient(ClientDTO clientDTO){
         Client client1 = clientRepo.findByEmail(clientDTO.getEmail());
         if (client1!=null){

@@ -13,6 +13,25 @@ import SpeedDialIcon from "@mui/material/SpeedDialIcon";
 import SpeedDialAction from "@mui/material/SpeedDialAction";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
 import ListIcon from "@mui/icons-material/List";
+import { blue, red } from "@mui/material/colors";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import TextField from "@mui/material/TextField";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import { useForm } from "react-hook-form";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import PackageService from "../Services/PackageService";
+import Packages from "./Packages";
 
 const SalonProfile = () => {
   const navigate = useNavigate();
@@ -27,7 +46,7 @@ const SalonProfile = () => {
     const parseData = JSON.parse(dataFromLocalStorage);
     const userIdFromData = parseData?.userId;
     setSalonId(userIdFromData);
-    console.log(salonId);
+    // console.log(salonId);
   }, []);
 
   useEffect(() => {
@@ -37,7 +56,7 @@ const SalonProfile = () => {
         const response = await AuthenticationServices.GetSalonDetails(salonId);
         if (response.data.code == "00") {
           setSalonDetails(response.data.content);
-          console.log(response.data.content);
+          // console.log(response.data.content);
         }
       } catch (error) {
         console.log(error);
@@ -77,6 +96,72 @@ const SalonProfile = () => {
   useEffect(() => {
     console.log(open);
   }, [open]);
+
+  // Add Package
+  const [openP, setOpenP] = React.useState(false);
+  const themeP = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
+
+  const handleClickOpen = () => {
+    setOpenP(true);
+  };
+
+  const handleClose = () => {
+    setOpenP(false);
+  };
+
+  const [type, setType] = React.useState("");
+  const [district, setDistrict] = React.useState("");
+
+  const handleChangeT = (event) => {
+    setType(event.target.value);
+  };
+  const handleChangeD = (event) => {
+    setDistrict(event.target.value);
+  };
+
+  // handle form
+  const [values, setValues] = useState({
+    package_name: "",
+    duration: "",
+    add_ons: "",
+    add_onstype: "",
+    price: "",
+  });
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = async (data, e) => {
+    e.preventDefault();
+    const user = {
+      packageName: data.package_name,
+      duration: data.duration,
+      add_ons: data.add_ons,
+      add_onsType: data.add_onstype,
+      packagePrice: data.price,
+      salonId: salonDetials.salonID,
+    };
+    console.log(user);
+
+    // toast.error(error.data);
+    console.log("Hello");
+    const result = await PackageService.AddPackage(user);
+    console.log(result);
+    if (result.data.status === "1") {
+      console.log(result.data.data);
+      toast.success("Your Package has been added successfully!");
+      setTimeout(async () => {
+        setOpenP(false);
+        window.location.reload();
+      }, 4000);
+    } else {
+      toast.error(result.data.data);
+    }
+  };
 
   return (
     <div className="bg-white">
@@ -286,6 +371,10 @@ const SalonProfile = () => {
                 </Tabs>
               </div>
             </div>
+            {/* Packages List */}
+            <div>
+              <Packages />
+            </div>
             {/* Speed Dial */}
             <div>
               <div className="">
@@ -295,6 +384,7 @@ const SalonProfile = () => {
                   icon={<SpeedDialIcon />}>
                   {actions.map((action) => (
                     <SpeedDialAction
+                      onClick={handleClickOpen}
                       key={action.name}
                       icon={action.icon}
                       tooltipTitle={action.name}
@@ -302,6 +392,128 @@ const SalonProfile = () => {
                   ))}
                 </SpeedDial>
               </div>
+              {/* Dialog */}
+              <Dialog
+                fullScreen={fullScreen}
+                open={openP}
+                onClose={handleClose}
+                aria-labelledby="responsive-dialog-title">
+                <DialogTitle id="responsive-dialog-title">
+                  {"Add a Package"}
+                </DialogTitle>
+                <DialogContent>
+                  <form
+                    action=""
+                    className="flex flex-col gap-4 p-2"
+                    onSubmit={handleSubmit(onSubmit)}>
+                    <div className="flex flex-col gap-5">
+                      <TextField
+                        name="package_name"
+                        required
+                        id="outlined-required"
+                        label="Package Name"
+                        placeholder="Package Name"
+                        {...register("package_name", {
+                          required: true,
+                        })}
+                      />
+                      {errors.package_name && (
+                        <p className="text-red-600">
+                          Please enter the Package Name
+                        </p>
+                      )}
+
+                      <select
+                        className="w-full p-2 text-lg bg-white border-2 border-gray-300 select select-bordered"
+                        type="text"
+                        name="duration"
+                        {...register("duration", {
+                          required: true,
+                        })}>
+                        <option disabled selected>
+                          Duration_hr
+                        </option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                        <option value="4">Four</option>
+                        <option value="5">Five</option>
+                      </select>
+                      {errors.duration && (
+                        <p className="text-red-600">
+                          Please select your salon type
+                        </p>
+                      )}
+
+                      <TextField
+                        name="add_ons"
+                        required
+                        id="outlined-required"
+                        label="Extra Included"
+                        placeholder="Extra Included"
+                        defaultValue="None"
+                        {...register("add_ons", {
+                          required: true,
+                        })}
+                      />
+                      {errors.add_ons && (
+                        <p className="text-red-600">
+                          Enter the extra included or none
+                        </p>
+                      )}
+
+                      <select
+                        className="w-full p-2 text-lg bg-white border-2 border-gray-300 select select-bordered"
+                        type="text"
+                        name="add_onstype"
+                        {...register("add_onstype", {
+                          required: true,
+                        })}>
+                        <option disabled selected>
+                          Extra included type
+                        </option>
+                        <option value="For an additional fee">
+                          For an additional fee
+                        </option>
+                        <option value="For a free of charge">
+                          For a free of charge
+                        </option>
+                        <option value="None">None</option>
+                      </select>
+                      {errors.add_onstype && (
+                        <p className="text-red-600">
+                          Please select your extra included type
+                        </p>
+                      )}
+
+                      <TextField
+                        name="price"
+                        required
+                        id="outlined-required"
+                        label="Price"
+                        placeholder="Price-LKR"
+                        {...register("price", {
+                          required: true,
+                          pattern: /^[0-9]+$/,
+                        })}
+                      />
+                      {errors.price && (
+                        <p className="text-red-600">Enter the Package price</p>
+                      )}
+                    </div>
+                    <div>
+                      <DialogActions>
+                        <Button autoFocus onClick={handleClose}>
+                          Cansle
+                        </Button>
+                        <Button variant="contained" type="submit" autoFocus>
+                          Add
+                        </Button>
+                      </DialogActions>
+                    </div>
+                  </form>
+                </DialogContent>
+              </Dialog>
             </div>
           </div>
         ) : (

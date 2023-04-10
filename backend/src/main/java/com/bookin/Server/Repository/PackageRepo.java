@@ -14,4 +14,6 @@ public interface PackageRepo extends JpaRepository<Packages,Integer> {
     Packages findByPackageName(String packageName);
     @Query(value = "SELECT * FROM bookin.package WHERE salon_id=?1", nativeQuery = true)
     List<Packages> getPackagesBySalonId(int salonId);
+
+    Packages findById(int packageId);
 }

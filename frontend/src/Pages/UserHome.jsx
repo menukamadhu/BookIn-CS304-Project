@@ -76,9 +76,11 @@ const UserHome = () => {
                       />
                     </div>
                     <div className="justify-end card-actions">
-                      <button className="px-8 bg-blue-600 border-none btn btn-primary hover:bg-blue-700">
-                        View Salon
-                      </button>
+                      <Link to="/BookingPage">
+                        <button className="px-8 bg-blue-600 border-none btn btn-primary hover:bg-blue-700">
+                          View
+                        </button>
+                      </Link>
                     </div>
                   </div>
                 </div>

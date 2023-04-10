@@ -98,4 +98,103 @@ public class PackageController {
             return new ResponseEntity(responseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    @GetMapping(value = "/getPackageById/{packageId}")
+    public ResponseEntity getPackageById(@PathVariable int packageId){
+        try {
+            Map<String,Object> map = new LinkedHashMap<String,Object>();
+            PackageDTO packageDTO = packageService.getPackageById(packageId);
+            if (packageDTO!=null){
+                map.put("status",1);
+                map.put("message","Success");
+                map.put("data",packageDTO);
+                return new ResponseEntity(map, HttpStatus.ACCEPTED);
+
+            }else{
+                map.clear();
+                map.put("status",0);
+                map.put("message","Package list is not found");
+                return new ResponseEntity(responseDTO,HttpStatus.BAD_REQUEST);
+            }
+        }catch (Exception e) {
+            responseDTO.setCode(VarList.RSP_ERROR);
+            responseDTO.setMessage(e.getMessage());
+            responseDTO.setContent(null);
+            return new ResponseEntity(responseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    @GetMapping(value = "/getPackageByName/{packageName}")
+    public ResponseEntity getPackageByName(@PathVariable String packageName){
+        try {
+            Map<String,Object> map = new LinkedHashMap<String,Object>();
+            PackageDTO packageDTO = packageService.getPackageByName(packageName);
+            if (packageDTO!=null){
+                map.put("status",1);
+                map.put("message","Success");
+                map.put("data",packageDTO);
+                return new ResponseEntity(map, HttpStatus.ACCEPTED);
+
+            }else{
+                map.clear();
+                map.put("status",0);
+                map.put("message","Package list is not found");
+                return new ResponseEntity(responseDTO,HttpStatus.BAD_REQUEST);
+            }
+        }catch (Exception e) {
+            responseDTO.setCode(VarList.RSP_ERROR);
+            responseDTO.setMessage(e.getMessage());
+            responseDTO.setContent(null);
+            return new ResponseEntity(responseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    @PutMapping(value = "/updatePackage")
+    public ResponseEntity updatePackage(@RequestBody PackageDTO packageDTO){
+        try {
+            String res = packageService.updatePackage(packageDTO);
+            if (res.equals("00")){
+                responseDTO.setCode(VarList.RSP_SUCCESS);
+                responseDTO.setMessage("Success");
+                responseDTO.setContent(packageDTO);
+                return new ResponseEntity(responseDTO, HttpStatus.ACCEPTED);
+
+            }else if (res.equals("06")){
+                responseDTO.setCode(VarList.RSP_NO_DATA_FOUND);
+                responseDTO.setMessage("Not a registered Salon");
+                responseDTO.setContent(packageDTO);
+                return new ResponseEntity(responseDTO,HttpStatus.BAD_REQUEST);
+            }else {
+                responseDTO.setCode(VarList.RSP_FAIL);
+                responseDTO.setMessage("Error");
+                responseDTO.setContent(null);
+                return new ResponseEntity(responseDTO,HttpStatus.BAD_REQUEST);
+            }
+        }catch (Exception e){
+            responseDTO.setCode(VarList.RSP_ERROR);
+            responseDTO.setMessage(e.getMessage());
+            responseDTO.setContent(null);
+            return new ResponseEntity(responseDTO,HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    @DeleteMapping(value = "/deletePackage/{packageId}")
+    public ResponseEntity deletePackage(@PathVariable int packageId){
+        try {
+            String res = packageService.deletePackage(packageId);
+            if (res.equals("00")){
+                responseDTO.setCode(VarList.RSP_SUCCESS);
+                responseDTO.setMessage("Success");
+                responseDTO.setContent(true);
+                return new ResponseEntity(responseDTO, HttpStatus.ACCEPTED);
+            }else {
+                responseDTO.setCode(VarList.RSP_NO_DATA_FOUND);
+                responseDTO.setMessage("No Salon available for this ID");
+                responseDTO.setContent(false);
+                return new ResponseEntity(responseDTO,HttpStatus.BAD_REQUEST);
+            }
+        }catch (Exception e){
+            responseDTO.setCode(VarList.RSP_ERROR);
+            responseDTO.setMessage(e.getMessage());
+            responseDTO.setContent(null);
+            return new ResponseEntity(responseDTO,HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }

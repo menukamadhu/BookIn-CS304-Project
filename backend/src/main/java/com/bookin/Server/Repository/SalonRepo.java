@@ -13,4 +13,6 @@ import java.util.Optional;
 public interface SalonRepo extends JpaRepository<Salon,Integer> {
     Salon findOneByEmailAndPassword(String email,String password);
     Salon findByEmail(String email);
+
+    Salon findByName(String name);
 }

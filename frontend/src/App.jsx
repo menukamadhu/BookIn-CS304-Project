@@ -25,6 +25,9 @@ import Completed from "./Pages/Salon/Completed";
 import Uploads from "./Pages/Salon/Uploads";
 import WorkDays from "./Pages/Salon/WorkDays";
 import WorkHours from "./Pages/Salon/WorkHours";
+import BookingPage from "./Pages/BookingPage";
+import Photos from "./Pages/Photos";
+import ReviewsC from "./Pages/ReviewsC";
 
 function App() {
   return (
@@ -61,6 +64,9 @@ function App() {
           <Route path="/Uploads" element={<Uploads />} />
           <Route path="/WorkDays" element={<WorkDays />} />
           <Route path="/WorkHours" element={<WorkHours />} />
+          <Route path="/BookingPage" element={<BookingPage />} />
+          <Route path="/Photos" element={<Photos />} />
+          <Route path="/ReviewsC" element={<ReviewsC />} />
         </Routes>
       </BrowserRouter>
     </div>
