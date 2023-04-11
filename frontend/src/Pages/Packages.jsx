@@ -4,11 +4,14 @@ import { useState } from "react";
 import { useEffect } from "react";
 import AuthenticationServices from "../Services/AuthenticationServices";
 import { styled } from "@mui/material/styles";
-import Box from "@mui/material/Box";
 import Rating from "@mui/material/Rating";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import Card from "@mui/material/Card";
+import CardActions from "@mui/material/CardActions";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
+import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
+import Package from "../Assets/Package.jpg";
 
 const Packages = () => {
   const navigate = useNavigate();
@@ -53,13 +56,44 @@ const Packages = () => {
   return (
     <div className="">
       <div className="flex flex-col items-center justify-center h-full text-gray-800 bg-white">
-        <h1 className="text-4xl font-bold text-blue-600">
+        {/* <h1 className="text-4xl font-bold text-blue-600">
           Package List in Here
-        </h1>
+        </h1> */}
         {packageDetails.map((packages) => (
           <div key={packages.packageId}>
-            <h1>{packages.packageName}</h1>
-            <h1>{packages.packagePrice}</h1>
+            <div className="flex flex-col p-4 md:flex-row">
+              <Card sx={{ maxWidth: 345 }}>
+                {/* <CardMedia
+                  sx={{ height: 140 }}
+                  image={Package}
+                  title="green iguana"
+                /> */}
+                <div>
+                  <img src={Package} alt="" />
+                </div>
+                <CardContent>
+                  <Typography gutterBottom variant="h4" component="div">
+                    {packages.packageName}
+                  </Typography>
+                  <Typography gutterBottom variant="body2" component="div">
+                    with {packages.add_ons}
+                  </Typography>
+                  <Typography gutterBottom variant="body2" component="div">
+                    {packages.add_onsType}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    duration : {packages.duration} hr
+                  </Typography>
+                  <Typography gutterBottom variant="h6" component="div">
+                    LKR {packages.packagePrice}
+                  </Typography>
+                </CardContent>
+                <CardActions>
+                  <Button size="small">Edit</Button>
+                  <Button size="small">Delete</Button>
+                </CardActions>
+              </Card>
+            </div>
           </div>
         ))}
       </div>
