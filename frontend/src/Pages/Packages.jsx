@@ -59,6 +59,7 @@ const Packages = () => {
         {packageDetails.map((packages) => (
           <div key={packages.packageId}>
             <h1>{packages.packageName}</h1>
+            <h1>{packages.packagePrice}</h1>
           </div>
         ))}
       </div>
