@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -24,4 +26,9 @@ public class Client {
 //    @OneToOne(mappedBy = "client",cascade = CascadeType.REMOVE)
 //    private Login login;
 
+    @OneToMany(mappedBy = "client",cascade = CascadeType.REMOVE)
+    private List<Booking> bookings;
+
+    @OneToMany(mappedBy = "client",cascade = CascadeType.REMOVE)
+    private List<Review> review;
 }

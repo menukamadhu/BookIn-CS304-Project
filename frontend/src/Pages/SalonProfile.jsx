@@ -147,15 +147,14 @@ const SalonProfile = () => {
     };
     console.log(user);
 
-    // toast.error(error.data);
     console.log("Hello");
     const result = await PackageService.AddPackage(user);
     console.log(result);
     if (result.data.status === "1") {
       console.log(result.data.data);
-      toast.success("Your Package has been added successfully!");
+      toast.success("Your package has been added successfully!");
       setTimeout(async () => {
-        setOpenP(false);
+        setOpen(false);
         window.location.reload();
       }, 4000);
     } else {

@@ -125,7 +125,7 @@ const AddPackage = async (data) => {
 const GetPackagesBySalon = async (salonID) => {
   const response = await axios({
     method: "get",
-    url: `http://localhost:8080/salon/getPackagesBySalonId/${salonID}`,
+    url: `http://localhost:8080/salon/package/getPackagesBySalonId/${salonID}`,
     headers: { "Content-Type": "application/json; charset=utf-8" },
   });
   console.log("data", salonID);

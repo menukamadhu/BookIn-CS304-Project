@@ -185,7 +185,7 @@ public class PackageController {
                 return new ResponseEntity(responseDTO, HttpStatus.ACCEPTED);
             }else {
                 responseDTO.setCode(VarList.RSP_NO_DATA_FOUND);
-                responseDTO.setMessage("No Salon available for this ID");
+                responseDTO.setMessage("No package available for this ID");
                 responseDTO.setContent(false);
                 return new ResponseEntity(responseDTO,HttpStatus.BAD_REQUEST);
             }

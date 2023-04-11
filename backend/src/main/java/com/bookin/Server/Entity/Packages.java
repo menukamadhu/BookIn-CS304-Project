@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -28,6 +30,7 @@ public class Packages {
     @JoinColumn(name = "salonId", referencedColumnName = "salonID")
     private Salon salon;
 
-
+    @OneToMany(mappedBy = "packages",cascade = CascadeType.REMOVE)
+    private List<Booking> bookings;
 
 }

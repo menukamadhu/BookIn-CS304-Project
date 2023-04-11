@@ -30,6 +30,7 @@ const Packages = () => {
     async function fetchPackages() {
       const res = await AuthenticationServices.GetPackagesBySalon(salonId);
       if (res.data.status == 1) {
+        console.log("Hello");
         setPackageDetails(res.data.data);
         console.log(res.data.data);
       }
@@ -55,12 +56,11 @@ const Packages = () => {
         <h1 className="text-4xl font-bold text-blue-600">
           Package List in Here
         </h1>
-        {/* {packageDetails.map((packages) => (
+        {packageDetails.map((packages) => (
           <div key={packages.packageId}>
-            
-            <h1>Menuka</h1>
+            <h1>{packages.packageName}</h1>
           </div>
-        ))} */}
+        ))}
       </div>
     </div>
   );
