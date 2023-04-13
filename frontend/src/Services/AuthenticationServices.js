@@ -132,6 +132,39 @@ const GetPackagesBySalon = async (salonID) => {
   return response;
 };
 
+// Upadate Packages
+const UpdatePackage = async (data) => {
+  const response = await axios({
+    method: "put",
+    url: `http://localhost:8080/salon/package/updatePackage`,
+    data: data,
+    headers: { "Content-Type": "application/json; charset=utf-8" },
+  });
+  return response;
+};
+
+// delete Package
+const DeletePackage = async (packageId) => {
+  const response = await axios({
+    method: "delete",
+    url: `http://localhost:8080/salon/package/deletePackage/${packageId}`,
+    headers: { "Content-Type": "application/json; charset=utf-8" },
+  });
+  return response;
+};
+
+// add a Review
+const AddReview = async (data) => {
+  console.log("data", data);
+  const response = await axios({
+    method: "post",
+    url: `http://localhost:8080/salon/review/addReview`,
+    data: data,
+    headers: { "Content-Type": "application/json; charset=utf-8" },
+  });
+  return response;
+};
+
 const AuthenticationServices = {
   userLogin,
   Register,
@@ -145,6 +178,9 @@ const AuthenticationServices = {
   GetAllSalons,
   AddPackage,
   GetPackagesBySalon,
+  UpdatePackage,
+  DeletePackage,
+  AddReview,
 };
 
 export default AuthenticationServices;
