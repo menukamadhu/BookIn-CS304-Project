@@ -47,6 +47,14 @@ function LoggedUserNav({ setUser }) {
     }
   };
 
+  const onNavigateDash = () => {
+    if (role == "Salon") {
+      navigate("/SalonProfile");
+    } else {
+      navigate("/UserHome");
+    }
+  };
+
   const onLink = () => {
     if (role == "Salon") {
       navigate("/SalonProfile");
@@ -85,7 +93,7 @@ function LoggedUserNav({ setUser }) {
               tabIndex={0}
               className="p-2 mt-3 text-gray-800 bg-white shadow menu menu-compact dropdown-content rounded-box w-52">
               <li>
-                <a>Profile</a>
+                <a onClick={onNavigateDash}>Profile</a>
               </li>
               <li>
                 <a className="justify-between}" onClick={onNavigate}>

@@ -77,6 +77,29 @@ const Completed = () => {
     console.log(open);
   }, [open]);
 
+  // Navigation
+  const onNavigateProfile = () => {
+    navigate("/SalonProfile");
+  };
+  const onNavigateUploads = () => {
+    navigate("/Uploads");
+  };
+  const onNavigateAppoinment = () => {
+    navigate("/Appoinment");
+  };
+  const onNavigateCompleted = () => {
+    navigate("/Completed");
+  };
+  const onNavigateReviews = () => {
+    navigate("/Reviews");
+  };
+  const onNavigateWorkH = () => {
+    navigate("/WorkHours");
+  };
+  const onNavigateWorkD = () => {
+    navigate("/WorkDays");
+  };
+
   return (
     <div className="bg-white">
       <Header />
@@ -217,76 +240,41 @@ const Completed = () => {
                   textColor="primary"
                   indicatorColor="primary"
                   aria-label="primary tabs example">
-                  <Link to="/SalonProfile">
-                    <Tab
-                      onChange={handleChange}
-                      textColor="primary"
-                      indicatorColor="primary"
-                      aria-label="primary tabs example"
-                      value="one"
-                      label="Packages"
-                    />
-                  </Link>
-                  <Link to="/Uploads">
-                    <Tab
-                      onChange={handleChange}
-                      textColor="primary"
-                      indicatorColor="primary"
-                      aria-label="primary tabs example"
-                      value="two"
-                      label="Uploads"
-                    />
-                  </Link>
-                  <Link to="/Appoinment">
-                    <Tab
-                      onChange={handleChange}
-                      textColor="primary"
-                      indicatorColor="primary"
-                      aria-label="primary tabs example"
-                      value="three"
-                      label="Appoinment"
-                    />
-                  </Link>
-                  <Link to="/Completed">
-                    <Tab
-                      onChange={handleChange}
-                      textColor="primary"
-                      indicatorColor="primary"
-                      aria-label="primary tabs example"
-                      value="four"
-                      label="Completed Appoinment"
-                    />
-                  </Link>
-                  <Link to="/Reviews">
-                    <Tab
-                      onChange={handleChange}
-                      textColor="primary"
-                      indicatorColor="primary"
-                      aria-label="primary tabs example"
-                      value="five"
-                      label="Reviews"
-                    />
-                  </Link>
-                  <Link to="/WorkHours">
-                    <Tab
-                      onChange={handleChange}
-                      textColor="primary"
-                      indicatorColor="primary"
-                      aria-label="primary tabs example"
-                      value="six"
-                      label="Customize working Hours"
-                    />
-                  </Link>
-                  <Link to="/WorkDays">
-                    <Tab
-                      onChange={handleChange}
-                      textColor="primary"
-                      indicatorColor="primary"
-                      aria-label="primary tabs example"
-                      value="seven"
-                      label="Customize working days"
-                    />
-                  </Link>
+                  <Tab
+                    onClick={onNavigateProfile}
+                    value="one"
+                    label="Packages"
+                  />
+                  <Tab
+                    onClick={onNavigateUploads}
+                    value="two"
+                    label="Uploads"
+                  />
+                  <Tab
+                    onClick={onNavigateAppoinment}
+                    value="three"
+                    label="Appoinment"
+                  />
+                  <Tab
+                    onClick={onNavigateCompleted}
+                    value="four"
+                    label="Completed Appoinment"
+                  />
+                  <Tab
+                    onClick={onNavigateReviews}
+                    value="five"
+                    label="Reviews"
+                  />
+                  <Tab
+                    onClick={onNavigateWorkH}
+                    value="six"
+                    label="Customize working Hours"
+                  />
+                  <Tab
+                    onClick={onNavigateWorkD}
+                    value="seven"
+                    label="Customize working days"
+                  />
                 </Tabs>
               </div>
             </div>

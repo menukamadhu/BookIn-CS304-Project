@@ -31,7 +31,7 @@ import { useForm } from "react-hook-form";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import PackageService from "../Services/PackageService";
-import Packages from "./Packages";
+import SalonPackages from "./SalonPackages";
 
 const SalonProfile = () => {
   const navigate = useNavigate();
@@ -150,7 +150,7 @@ const SalonProfile = () => {
     console.log("Hello");
     const result = await PackageService.AddPackage(user);
     console.log(result);
-    if (result.data.status === "1") {
+    if (result.data.status == "1") {
       console.log(result.data.data);
       toast.success("Your package has been added successfully!");
       setTimeout(async () => {
@@ -162,6 +162,29 @@ const SalonProfile = () => {
     }
   };
 
+  // Navigation
+  const onNavigateProfile = () => {
+    navigate("/SalonProfile");
+  };
+  const onNavigateUploads = () => {
+    navigate("/Uploads");
+  };
+  const onNavigateAppoinment = () => {
+    navigate("/Appoinment");
+  };
+  const onNavigateCompleted = () => {
+    navigate("/Completed");
+  };
+  const onNavigateReviews = () => {
+    navigate("/Reviews");
+  };
+  const onNavigateWorkH = () => {
+    navigate("/WorkHours");
+  };
+  const onNavigateWorkD = () => {
+    navigate("/WorkDays");
+  };
+
   return (
     <div className="bg-white">
       <Header />
@@ -171,7 +194,7 @@ const SalonProfile = () => {
         ) : error ? (
           <p>{error}</p>
         ) : salonDetials ? (
-          <div className="h-screen">
+          <div className="h-full">
             <div className="flex flex-col items-center justify-center gap-4 pb-4 md:flex-row">
               <h1 className="text-5xl font-bold text-blue-500 md:text-6xl">
                 Hello
@@ -296,83 +319,53 @@ const SalonProfile = () => {
                 </Tabs>
               </div>
               <div className="hidden md:block">
-                <Tabs>
-                  <Link to="/SalonProfile">
-                    <Tab
-                      onChange={handleChange}
-                      textColor="primary"
-                      indicatorColor="primary"
-                      aria-label="primary tabs example"
-                      value="one"
-                      label="Packages"
-                    />
-                  </Link>
-                  <Link to="/Uploads">
-                    <Tab
-                      onChange={handleChange}
-                      textColor="primary"
-                      indicatorColor="primary"
-                      aria-label="primary tabs example"
-                      value="two"
-                      label="Uploads"
-                    />
-                  </Link>
-                  <Link to="/Appoinment">
-                    <Tab
-                      onChange={handleChange}
-                      textColor="primary"
-                      indicatorColor="primary"
-                      aria-label="primary tabs example"
-                      value="three"
-                      label="Appoinment"
-                    />
-                  </Link>
-                  <Link to="/Completed">
-                    <Tab
-                      onChange={handleChange}
-                      textColor="primary"
-                      indicatorColor="primary"
-                      aria-label="primary tabs example"
-                      value="four"
-                      label="Completed Appoinment"
-                    />
-                  </Link>
-                  <Link to="/Reviews">
-                    <Tab
-                      onChange={handleChange}
-                      textColor="primary"
-                      indicatorColor="primary"
-                      aria-label="primary tabs example"
-                      value="five"
-                      label="Reviews"
-                    />
-                  </Link>
-                  <Link to="/WorkHours">
-                    <Tab
-                      onChange={handleChange}
-                      textColor="primary"
-                      indicatorColor="primary"
-                      aria-label="primary tabs example"
-                      value="six"
-                      label="Customize working Hours"
-                    />
-                  </Link>
-                  <Link to="/WorkDays">
-                    <Tab
-                      onChange={handleChange}
-                      textColor="primary"
-                      indicatorColor="primary"
-                      aria-label="primary tabs example"
-                      value="seven"
-                      label="Customize working days"
-                    />
-                  </Link>
+                <Tabs
+                  value={value}
+                  onChange={handleChange}
+                  textColor="primary"
+                  indicatorColor="primary"
+                  aria-label="primary tabs example">
+                  <Tab
+                    onClick={onNavigateProfile}
+                    value="one"
+                    label="Packages"
+                  />
+                  <Tab
+                    onClick={onNavigateUploads}
+                    value="two"
+                    label="Uploads"
+                  />
+                  <Tab
+                    onClick={onNavigateAppoinment}
+                    value="three"
+                    label="Appoinment"
+                  />
+                  <Tab
+                    onClick={onNavigateCompleted}
+                    value="four"
+                    label="Completed Appoinment"
+                  />
+                  <Tab
+                    onClick={onNavigateReviews}
+                    value="five"
+                    label="Reviews"
+                  />
+                  <Tab
+                    onClick={onNavigateWorkH}
+                    value="six"
+                    label="Customize working Hours"
+                  />
+                  <Tab
+                    onClick={onNavigateWorkD}
+                    value="seven"
+                    label="Customize working days"
+                  />
                 </Tabs>
               </div>
             </div>
             {/* Packages List */}
             <div>
-              <Packages />
+              <SalonPackages />
             </div>
             {/* Speed Dial */}
             <div>
@@ -440,7 +433,7 @@ const SalonProfile = () => {
                       </select>
                       {errors.duration && (
                         <p className="text-red-600">
-                          Please select your salon type
+                          Please select package duration in hours
                         </p>
                       )}
 

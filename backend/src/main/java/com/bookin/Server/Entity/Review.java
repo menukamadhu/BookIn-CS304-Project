@@ -15,6 +15,8 @@ public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int reviewId;
+
+    private String reviewer;
     private String review;
     private double rate;
 
