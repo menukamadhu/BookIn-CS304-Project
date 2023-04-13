@@ -12,6 +12,23 @@ import SpeedDialIcon from "@mui/material/SpeedDialIcon";
 import SpeedDialAction from "@mui/material/SpeedDialAction";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
 import ListIcon from "@mui/icons-material/List";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import Divider from "@mui/material/Divider";
+import ListItemText from "@mui/material/ListItemText";
+import ListItemAvatar from "@mui/material/ListItemAvatar";
+import Avatar from "@mui/material/Avatar";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { red } from "@mui/material/colors";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 
 const Reviews = () => {
   const navigate = useNavigate();
@@ -98,6 +115,56 @@ const Reviews = () => {
   };
   const onNavigateWorkD = () => {
     navigate("/WorkDays");
+  };
+
+  // get all reviews
+  const [reviewDetails, setReviewDetails] = useState("");
+  useEffect(() => {
+    async function fetchPackages() {
+      const res = await AuthenticationServices.GetReviewsBySalon(salonId);
+      if (res.data.status == 1) {
+        console.log("Hello");
+        setReviewDetails(res.data.data);
+        console.log(res.data.data);
+      }
+    }
+    if (salonId) {
+      fetchPackages();
+    }
+  }, [salonId]);
+  console.log("aaaaaaaa review", reviewDetails);
+
+  // Delete Review
+  const [openD, setOpenD] = React.useState(false);
+  const [deleteId, setDeleteId] = useState(0);
+
+  const handleClickOpenD = (id) => {
+    setOpenD(true);
+    setDeleteId(id);
+  };
+
+  const handleCloseD = () => {
+    setOpenD(false);
+  };
+  console.log("aaaaaaaa deleteId", deleteId);
+
+  const HandleDeleteReview = async () => {
+    try {
+      const response = await AuthenticationServices.TestDelete(deleteId);
+      if (response.data.code == "00") {
+        toast.success("Review has been Deleted Successfully");
+        setTimeout(() => {
+          window.location.reload();
+        }, 4000);
+      } else {
+        toast.error("An Error Occurred While Deleting Review");
+        setOpenD(false);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("An Error Occurred While Deleting Review");
+      setOpenD(false);
+    }
   };
 
   return (
@@ -276,6 +343,94 @@ const Reviews = () => {
                     label="Customize working days"
                   />
                 </Tabs>
+              </div>
+            </div>
+            <div>
+              <div className="md:px-72">
+                {reviewDetails &&
+                  reviewDetails.map((review) => (
+                    <div key={review.reviewId}>
+                      <List
+                        sx={{
+                          width: "100%",
+                          bgcolor: "background.paper",
+                        }}>
+                        <ListItem alignItems="flex-start">
+                          <ListItemAvatar>
+                            <Avatar
+                              alt={review.reviewer}
+                              src="/static/images/avatar/1.jpg"
+                            />
+                          </ListItemAvatar>
+                          <ListItemText
+                            primary={review.reviewer}
+                            secondary={
+                              <React.Fragment>
+                                <Typography
+                                  sx={{ display: "inline" }}
+                                  component="span"
+                                  variant="body2"
+                                  color="text.primary">
+                                  {review.review}
+                                </Typography>
+                                <div
+                                  style={{
+                                    display: "flex",
+                                    justifyContent: "flex-end",
+                                  }}>
+                                  <Button
+                                    variant="outlined"
+                                    color="error"
+                                    onClick={() =>
+                                      handleClickOpenD(review.reviewId)
+                                    }>
+                                    Delete
+                                  </Button>
+                                  <Dialog
+                                    open={openD}
+                                    onClose={handleCloseD}
+                                    aria-labelledby="alert-dialog-title"
+                                    aria-describedby="alert-dialog-description">
+                                    <DialogTitle id="alert-dialog-title">
+                                      {"Confirm Delete"}
+                                    </DialogTitle>
+                                    <div className="flex items-center justify-center">
+                                      <DeleteOutlineIcon
+                                        style={{
+                                          fontSize: 40,
+                                          color: red[600],
+                                        }}
+                                      />
+                                    </div>
+                                    <DialogContent>
+                                      <DialogContentText id="alert-dialog-description">
+                                        Are you sure to delete this review?
+                                      </DialogContentText>
+                                    </DialogContent>
+                                    <DialogActions>
+                                      <Button onClick={handleCloseD}>
+                                        Cancel
+                                      </Button>
+                                      <Button
+                                        // variant="outlined"
+                                        onClick={HandleDeleteReview}
+                                        sx={{ color: red[600] }}>
+                                        Delete
+                                      </Button>
+                                    </DialogActions>
+                                  </Dialog>
+                                </div>
+                                {/* {
+                            " — I'll be in your neighborhood doing errands this…"
+                          } */}
+                              </React.Fragment>
+                            }
+                          />
+                        </ListItem>
+                        <Divider variant="inset" component="li" />
+                      </List>
+                    </div>
+                  ))}
               </div>
             </div>
           </div>
