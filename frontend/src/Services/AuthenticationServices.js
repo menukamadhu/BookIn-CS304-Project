@@ -165,6 +165,71 @@ const AddReview = async (data) => {
   return response;
 };
 
+// get review by salon Id
+const GetReviewsBySalon = async (salonID) => {
+  const response = await axios({
+    method: "get",
+    url: `http://localhost:8080/salon/review/getReviewBySalonId/${salonID}`,
+    headers: { "Content-Type": "application/json; charset=utf-8" },
+  });
+  console.log("data", salonID);
+  return response;
+};
+
+// delete Review
+const TestDelete = async (reviewId) => {
+  const response = await axios({
+    method: "delete",
+    url: `http://localhost:8080/salon/review/deleteReview/${reviewId}`,
+    headers: { "Content-Type": "application/json; charset=utf-8" },
+  });
+  return response;
+};
+
+// add a Booking
+const AddBooking = async (data) => {
+  console.log("data", data);
+  const response = await axios({
+    method: "post",
+    url: `http://localhost:8080/salon/booking/addBooking`,
+    data: data,
+    headers: { "Content-Type": "application/json; charset=utf-8" },
+  });
+  return response;
+};
+
+// `${value}-${value+duration}`
+
+// Upadate Booking
+const UpdateBooking = async (data) => {
+  const response = await axios({
+    method: "put",
+    url: `http://localhost:8080/salon/booking/updateBooking`,
+    data: data,
+    headers: { "Content-Type": "application/json; charset=utf-8" },
+  });
+  return response;
+};
+
+// Get Booking By Date
+const GetBookingByDate = async (bookingDate) => {
+  const response = await axios({
+    method: "get",
+    url: `http://localhost:8080/salon/booking/getBookingByDate/${bookingDate}`,
+    headers: { "Content-Type": "application/json; charset=utf-8" },
+  });
+  return response;
+};
+
+// Get Booking By Done
+const GetBookingByDone = async (doneBook) => {
+  const response = await axios({
+    method: "get",
+    url: `http://localhost:8080/salon/booking/getBookingByDone/${doneBook}`,
+    headers: { "Content-Type": "application/json; charset=utf-8" },
+  });
+  return response;
+};
 const AuthenticationServices = {
   userLogin,
   Register,
@@ -181,6 +246,12 @@ const AuthenticationServices = {
   UpdatePackage,
   DeletePackage,
   AddReview,
+  GetReviewsBySalon,
+  TestDelete,
+  AddBooking,
+  UpdateBooking,
+  GetBookingByDate,
+  GetBookingByDone,
 };
 
 export default AuthenticationServices;

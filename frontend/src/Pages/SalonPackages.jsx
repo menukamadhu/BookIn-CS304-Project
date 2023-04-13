@@ -89,9 +89,11 @@ const SalonPackages = () => {
   const [open, setOpen] = React.useState(false);
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
+  const [updateId, setUpdateId] = useState(0);
 
-  const handleClickOpen = () => {
+  const handleClickOpen = (id) => {
     setOpen(true);
+    setUpdateId(id);
   };
 
   const handleClose = () => {
@@ -134,24 +136,18 @@ const SalonPackages = () => {
   // Delete Account
   const [openD, setOpenD] = React.useState(false);
 
-  const handleClickOpenD = () => {
+  const handleClickOpenD = (id) => {
     setOpenD(true);
+    setUpdateId(id);
   };
-
+  console.log("aaaaaaaaaaaaaa updateId", updateId);
   const handleCloseD = () => {
     setOpenD(false);
   };
 
-  const DeletePackage = async (data, e) => {
-    console.log("Hello Delete Section");
-    const user = {
-      packageId: data.id,
-    };
-    console.log(user.packageId);
+  const DeletePackage = async () => {
     try {
-      const response = await AuthenticationServices.DeletePackage(
-        user.packageId
-      );
+      const response = await AuthenticationServices.DeletePackage(updateId);
       if (response.data.code == "00") {
         toast.success("Package has been Deleted Successfully");
         setTimeout(() => {
@@ -159,11 +155,11 @@ const SalonPackages = () => {
           window.location.reload();
         }, 4000);
       } else {
-        toast.error("An Error Occurred While Deleting Your Account");
+        toast.error("An Error Occurred While Deleting Your Package");
       }
     } catch (error) {
       console.log(error);
-      toast.error("An Error Occurred While Deleting Your Account");
+      toast.error("An Error Occurred While Deleting Your Server");
     }
   };
 
@@ -195,12 +191,14 @@ const SalonPackages = () => {
                   </Typography>
                 </CardContent>
                 <CardActions>
-                  <Button size="small" onClick={handleClickOpen}>
+                  <Button
+                    size="small"
+                    onClick={() => handleClickOpen(packages.packageId)}>
                     Edit
                   </Button>
                   <Button
                     size="small"
-                    onClick={handleClickOpenD}
+                    onClick={() => handleClickOpenD(packages.packageId)}
                     sx={{ color: red[600] }}>
                     Delete
                   </Button>
@@ -344,7 +342,7 @@ const SalonPackages = () => {
                       <div>
                         <DialogActions>
                           <Button autoFocus onClick={handleClose}>
-                            Cansle
+                            Cancel
                           </Button>
                           <Button variant="contained" type="submit" autoFocus>
                             Save changes

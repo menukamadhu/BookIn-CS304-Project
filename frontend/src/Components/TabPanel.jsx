@@ -35,6 +35,12 @@ import FormHelperText from "@mui/material/FormHelperText";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { Fullscreen } from "@mui/icons-material";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import Divider from "@mui/material/Divider";
+import ListItemText from "@mui/material/ListItemText";
+import ListItemAvatar from "@mui/material/ListItemAvatar";
+import Avatar from "@mui/material/Avatar";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -73,6 +79,7 @@ export default function BasicTabs() {
   const location = useLocation();
   const myPropValue = location.state?.myProp;
   const [packageDetails, setPackageDetails] = useState(null);
+  const [reviewDetails, setReviewDetails] = useState(null);
 
   useEffect(() => {
     async function fetchPackages() {
@@ -88,6 +95,22 @@ export default function BasicTabs() {
     }
   }, [myPropValue]);
   console.log(packageDetails);
+
+  // get all reviews
+  useEffect(() => {
+    async function fetchPackages() {
+      const res = await AuthenticationServices.GetReviewsBySalon(myPropValue);
+      if (res.data.status == 1) {
+        console.log("Hello");
+        setReviewDetails(res.data.data);
+        console.log(res.data.data);
+      }
+    }
+    if (myPropValue) {
+      fetchPackages();
+    }
+  }, [myPropValue]);
+  console.log("aaaaaaaa review", reviewDetails);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -252,7 +275,7 @@ export default function BasicTabs() {
                                 labelId="demo-simple-select-helper-label"
                                 id="demo-simple-select-helper"
                                 value={time}
-                                label="Age"
+                                label="Select time"
                                 onChange={handleChangeTime}>
                                 <MenuItem value="">
                                   <em>None</em>
@@ -273,7 +296,7 @@ export default function BasicTabs() {
                           </DialogContent>
                           <DialogActions>
                             <Button autoFocus onClick={handleClose}>
-                              Cansle
+                              Cancel
                             </Button>
                             <Button
                               className="right-2"
@@ -298,10 +321,48 @@ export default function BasicTabs() {
       </TabPanel>
       <TabPanel value={value} index={2}>
         <div className="p">
-          Reviews
+          <div>
+            {reviewDetails?.map((review) => (
+              <div key={review.reviewId}>
+                <List
+                  sx={{
+                    width: "100%",
+                    bgcolor: "background.paper",
+                  }}>
+                  <ListItem alignItems="flex-start">
+                    <ListItemAvatar>
+                      <Avatar
+                        alt={review.reviewer}
+                        src="/static/images/avatar/1.jpg"
+                      />
+                    </ListItemAvatar>
+                    <ListItemText
+                      primary={review.reviewer}
+                      secondary={
+                        <React.Fragment>
+                          <Typography
+                            sx={{ display: "inline" }}
+                            component="span"
+                            variant="body2"
+                            color="text.primary">
+                            {review.review}
+                          </Typography>
+                          {/* {
+                            " — I'll be in your neighborhood doing errands this…"
+                          } */}
+                        </React.Fragment>
+                      }
+                    />
+                  </ListItem>
+                  <Divider variant="inset" component="li" />
+                </List>
+              </div>
+            ))}
+          </div>
           <Typography
             component="div"
-            sx={{ position: "absolute", bottom: 20, left: 20 }}>
+            sx={{ position: "", bottom: 20, left: 20 }}
+            className="pt-10">
             <form action="" onSubmit={handleSubmit(onSubmit)}>
               <div className="flex flex-row gap-4">
                 <TextField

@@ -496,7 +496,7 @@ const SalonProfile = () => {
                     <div>
                       <DialogActions>
                         <Button autoFocus onClick={handleClose}>
-                          Cansle
+                          Cancel
                         </Button>
                         <Button variant="contained" type="submit" autoFocus>
                           Add

@@ -32,12 +32,15 @@ function LoggedUserNav({ setUser }) {
   }, []);
 
   const [role, setRole] = useState("");
+  const [email, setEmail] = useState("");
 
   useEffect(() => {
     const dataFromLocalStorage = localStorage.getItem("loggedUser");
     const parseData = JSON.parse(dataFromLocalStorage);
     const roleFromData = parseData?.role;
+    const emailFromData = parseData?.email;
     setRole(roleFromData);
+    setEmail(emailFromData);
   }, []);
   const onNavigate = () => {
     if (role == "Salon") {
@@ -86,7 +89,11 @@ function LoggedUserNav({ setUser }) {
           <div className="dropdown dropdown-end">
             <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
               <div>
-                <Avatar sx={{ bgcolor: blue[600] }} />
+                <Avatar
+                  sx={{ bgcolor: blue[600] }}
+                  alt={email}
+                  src="/static/images/avatar/1.jpg"
+                />
               </div>
             </label>
             <ul
@@ -96,7 +103,7 @@ function LoggedUserNav({ setUser }) {
                 <a onClick={onNavigateDash}>Profile</a>
               </li>
               <li>
-                <a className="justify-between}" onClick={onNavigate}>
+                <a className="justify-between" onClick={onNavigate}>
                   My account
                   {/* <span className="badge">New</span> */}
                 </a>
