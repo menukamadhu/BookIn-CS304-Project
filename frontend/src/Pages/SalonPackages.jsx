@@ -90,10 +90,21 @@ const SalonPackages = () => {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
   const [updateId, setUpdateId] = useState(0);
+  const [updatePackageName, setUpdatePackageName] = useState("");
+  const [updateDuration, setUpdateDuration] = useState(0);
+  const [updateAddOns, setUpdateAddOns] = useState("");
+  const [updateType, setUpdateType] = useState("");
+  const [updatePrice, setUpdatePrice] = useState("");
 
-  const handleClickOpen = (id) => {
+  const handleClickOpen = (p) => {
     setOpen(true);
-    setUpdateId(id);
+    setUpdateId(p.packageId);
+    setUpdatePackageName(p.packageName);
+    setUpdateDuration(p.duration);
+    setUpdateAddOns(p.add_ons);
+    setUpdateType(p.add_onsType);
+    setUpdatePrice(p.packagePrice);
+    console.log("aaaaaaaaaaaaaaaaaaaaaaaa package", p);
   };
 
   const handleClose = () => {
@@ -103,7 +114,7 @@ const SalonPackages = () => {
   const onSubmit = async (data, e) => {
     e.preventDefault();
     const user = {
-      packageId: data.id,
+      packageId: updateId,
       packageName: data.package_name,
       duration: data.duration,
       add_ons: data.add_ons,
@@ -177,8 +188,14 @@ const SalonPackages = () => {
                   <Typography gutterBottom variant="h4" component="div">
                     {packages.packageName}
                   </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    extra included servise :
+                  </Typography>
                   <Typography gutterBottom variant="body2" component="div">
-                    with {packages.add_ons}
+                    {packages.add_ons}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    payment type :
                   </Typography>
                   <Typography gutterBottom variant="body2" component="div">
                     {packages.add_onsType}
@@ -193,7 +210,7 @@ const SalonPackages = () => {
                 <CardActions>
                   <Button
                     size="small"
-                    onClick={() => handleClickOpen(packages.packageId)}>
+                    onClick={() => handleClickOpen(packages)}>
                     Edit
                   </Button>
                   <Button
@@ -218,7 +235,7 @@ const SalonPackages = () => {
                       className="flex flex-col gap-4 p-2"
                       onSubmit={handleSubmit(onSubmit)}>
                       <div className="flex flex-col gap-5">
-                        <select
+                        {/* <select
                           className="w-full p-2 text-lg bg-white border-2 border-gray-300 select select-bordered"
                           type="text"
                           name="id"
@@ -237,7 +254,7 @@ const SalonPackages = () => {
                           <p className="text-red-600">
                             Please select the package id
                           </p>
-                        )}
+                        )} */}
 
                         <TextField
                           name="package_name"
@@ -245,7 +262,7 @@ const SalonPackages = () => {
                           id="outlined-required"
                           label="Package Name"
                           placeholder="Package Name"
-                          defaultValue={packages.packageName}
+                          defaultValue={updatePackageName}
                           {...register("package_name", {
                             required: true,
                           })}
@@ -260,7 +277,7 @@ const SalonPackages = () => {
                           className="w-full p-2 text-lg bg-white border-2 border-gray-300 select select-bordered"
                           type="text"
                           name="duration"
-                          defaultValue={packages.duration}
+                          defaultValue={updateDuration}
                           {...register("duration", {
                             required: true,
                           })}>
@@ -285,7 +302,7 @@ const SalonPackages = () => {
                           id="outlined-required"
                           label="Extra Included"
                           placeholder="Extra Included"
-                          defaultValue={packages.add_ons}
+                          defaultValue={updateAddOns}
                           {...register("add_ons", {
                             required: true,
                           })}
@@ -300,7 +317,7 @@ const SalonPackages = () => {
                           className="w-full p-2 text-lg bg-white border-2 border-gray-300 select select-bordered"
                           type="text"
                           name="add_onstype"
-                          defaultValue={packages.add_onsType}
+                          defaultValue={updateType}
                           {...register("add_onstype", {
                             required: true,
                           })}>
@@ -327,7 +344,7 @@ const SalonPackages = () => {
                           id="outlined-required"
                           label="Price"
                           placeholder="Price-LKR"
-                          defaultValue={packages.packagePrice}
+                          defaultValue={updatePrice}
                           {...register("price", {
                             required: true,
                             pattern: /^[0-9]+$/,

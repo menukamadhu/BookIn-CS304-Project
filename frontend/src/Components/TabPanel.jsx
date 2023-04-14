@@ -85,16 +85,16 @@ export default function BasicTabs() {
     async function fetchPackages() {
       const res = await AuthenticationServices.GetPackagesBySalon(myPropValue);
       if (res.data.status == 1) {
-        console.log("Hello");
+        // console.log("Hello");
         setPackageDetails(res.data.data);
-        console.log(res.data.data);
+        // console.log(res.data.data);
       }
     }
     if (myPropValue) {
       fetchPackages();
     }
   }, [myPropValue]);
-  console.log(packageDetails);
+  // console.log(packageDetails);
 
   // get all reviews
   useEffect(() => {
@@ -103,14 +103,13 @@ export default function BasicTabs() {
       if (res.data.status == 1) {
         console.log("Hello");
         setReviewDetails(res.data.data);
-        console.log(res.data.data);
+        // console.log(res.data.data);
       }
     }
     if (myPropValue) {
       fetchPackages();
     }
   }, [myPropValue]);
-  console.log("aaaaaaaa review", reviewDetails);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -121,9 +120,17 @@ export default function BasicTabs() {
   const [open, setOpen] = React.useState(false);
   const theme = useTheme();
   // const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
+  const [packageId, setPackageId] = useState(0);
+  const [duration, setDuration] = useState(0);
+  const [bookings, setBookings] = useState(null);
+  // const [bookingTimes, setBookingTimes] = useState([]);
 
-  const handleClickOpen = () => {
+  const handleClickOpen = (id, duration) => {
     setOpen(true);
+    setPackageId(id);
+    setDuration(duration);
+    // setBookingTimes(bookings.map((b) => b.bookingTime));
+    console.log("xxxxxxxxxxxxxxxxxxxx btimes", bookingTimes);
   };
 
   const handleClose = () => {
@@ -148,7 +155,7 @@ export default function BasicTabs() {
     const parseData = JSON.parse(dataFromLocalStorage);
     const userIdFromData = parseData?.userId;
     setclientId(userIdFromData);
-    console.log(clientId);
+    // console.log(clientId);
   }, []);
 
   useEffect(() => {
@@ -160,7 +167,7 @@ export default function BasicTabs() {
         );
         if (response.data.code == "00") {
           setclientDetails(response.data.content);
-          console.log(response.data.content);
+          // console.log(response.data.content);
         }
       } catch (error) {
         console.log(error);
@@ -192,7 +199,7 @@ export default function BasicTabs() {
       clientId: clientDetails.clientID,
     };
     const result = await AuthenticationServices.AddReview(review);
-    console.log(result);
+    // console.log(result);
     if (result.data.status == "1") {
       console.log(result.data.data);
       toast.success("Your review has been added!");
@@ -204,6 +211,80 @@ export default function BasicTabs() {
       toast.error(result.data.data);
     }
   };
+
+  // get booking salonId
+
+  useEffect(() => {
+    async function fetchBookings() {
+      const res = await AuthenticationServices.GetBookingBySalonId(myPropValue);
+      if (res.data.status == 1) {
+        console.log("Hello");
+        setBookings(res.data.data);
+        // const bookingTimes = bookings.map(
+        //   (booking) => booking.bookingTime.split("-")[0]
+        // );
+        // const excludedTimes = bookingTimes.map((str) => parseInt(str));
+        // console.log("Bookind times xxxxxxxxxxxxxxxxxxx", excludedTimes);
+      }
+    }
+    if (myPropValue) {
+      fetchBookings();
+    }
+  }, [myPropValue]);
+  console.log("all bookings", bookings);
+  // console.log("aaaaaaaaa pid", packageId);
+  // console.log("xxxxxxx date", `${valueD?.$M + 1}/${valueD?.$D}/${valueD?.$y}`);
+  // console.log("yyyyyyy time", time);
+  const bookingTimes = bookings?.map(
+    (booking) => booking.bookingTime.split("-")[0]
+  );
+  const excludedTimes = bookingTimes?.map((str) => parseInt(str));
+  console.log("Bookind times xxxxxxxxxxxxxxxxxxx", excludedTimes);
+
+  // add a booking
+  const [booktime, setBooktime] = useState({
+    time: "",
+  });
+
+  const onBooking = async (e) => {
+    console.log("Open");
+    e.preventDefault();
+    const book = {
+      bookingDate: `${valueD.$M + 1}/${valueD.$D}/${valueD.$y}`,
+      bookingTime: `${time}-${time + duration}`,
+      doneBook: "",
+      packagesPackageId: packageId,
+      clientId: clientDetails.clientID,
+      salonId: myPropValue,
+    };
+    console.log("yyyyyyy book", book);
+    const result = await AuthenticationServices.AddBooking(book);
+    // console.log(result);
+    if (result.data.status == "1") {
+      console.log(result.data.data);
+      toast.success("Your booking has been added successfully!");
+      setOpen(false);
+    } else {
+      toast.error(result.data.data);
+      setOpen(false);
+    }
+  };
+
+  // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  const menuItems = [
+    { value: "", label: <em>None</em> },
+    { value: 9, label: "9.00 am" },
+    { value: 10, label: "10.00 am" },
+    { value: 11, label: "11.00 am" },
+    { value: 12, label: "12.00 pm" },
+    { value: 13, label: "1.00 pm" },
+    { value: 14, label: "2.00 pm" },
+    { value: 15, label: "3.00 pm" },
+    { value: 16, label: "4.00 pm" },
+    { value: 17, label: "5.00 pm" },
+    { value: 18, label: "6.00 pm" },
+    { value: 19, label: "7.00 pm" },
+  ];
 
   return (
     <Box sx={{ width: "100%" }}>
@@ -231,8 +312,14 @@ export default function BasicTabs() {
                       <Typography gutterBottom variant="h4" component="div">
                         {packages.packageName}
                       </Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        extra included servise :
+                      </Typography>
                       <Typography gutterBottom variant="body2" component="div">
-                        with {packages.add_ons}
+                        {packages.add_ons}
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        payment type :
                       </Typography>
                       <Typography gutterBottom variant="body2" component="div">
                         {packages.add_onsType}
@@ -246,66 +333,99 @@ export default function BasicTabs() {
                     </CardContent>
                     <CardActions>
                       <div>
-                        <Button size="small" onClick={handleClickOpen}>
+                        <Button
+                          size="small"
+                          onClick={() =>
+                            handleClickOpen(
+                              packages.packageId,
+                              packages.duration
+                            )
+                          }>
                           Book
                         </Button>
                         <Dialog
                           open={open}
                           onClose={handleClose}
                           aria-labelledby="responsive-dialog-title">
-                          <DialogTitle id="responsive-dialog-title">
-                            {"book a time and date"}
-                          </DialogTitle>
-                          <DialogContent>
-                            <LocalizationProvider dateAdapter={AdapterDayjs}>
-                              <DemoContainer components={["DatePicker"]}>
-                                <DatePicker
-                                  valueD={valueD}
-                                  onChange={(newValue) => setValueD(newValue)}
-                                />
-                              </DemoContainer>
-                            </LocalizationProvider>
-                            <FormControl
-                              sx={{ m: 1 }}
-                              className="w-full top-2 right-2">
-                              <InputLabel id="demo-simple-select-helper-label">
-                                Select time
-                              </InputLabel>
-                              <Select
-                                labelId="demo-simple-select-helper-label"
-                                id="demo-simple-select-helper"
-                                value={time}
-                                label="Select time"
-                                onChange={handleChangeTime}>
-                                <MenuItem value="">
-                                  <em>None</em>
-                                </MenuItem>
-                                <MenuItem value={9}>9.00 am</MenuItem>
-                                <MenuItem value={10}>10.00 am</MenuItem>
-                                <MenuItem value={11}>11.00 am</MenuItem>
-                                <MenuItem value={12}>12.00 pm</MenuItem>
-                                <MenuItem value={13}>1.00 pm</MenuItem>
-                                <MenuItem value={14}>2.00 pm</MenuItem>
-                                <MenuItem value={15}>3.00 pm</MenuItem>
-                                <MenuItem value={16}>4.00 pm</MenuItem>
-                                <MenuItem value={17}>5.00 pm</MenuItem>
-                                <MenuItem value={18}>6.00 pm</MenuItem>
-                                <MenuItem value={19}>7.00 pm</MenuItem>
-                              </Select>
-                            </FormControl>
-                          </DialogContent>
-                          <DialogActions>
-                            <Button autoFocus onClick={handleClose}>
-                              Cancel
-                            </Button>
-                            <Button
-                              className="right-2"
-                              variant="outlined"
-                              onClick={handleClose}
-                              autoFocus>
-                              Book
-                            </Button>
-                          </DialogActions>
+                          <form action="">
+                            <DialogTitle id="responsive-dialog-title">
+                              {"book a time and date"}
+                            </DialogTitle>
+                            <DialogContent>
+                              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                <DemoContainer components={["DatePicker"]}>
+                                  <DatePicker
+                                    valueD={valueD}
+                                    onChange={(newValue) => setValueD(newValue)}
+                                  />
+                                </DemoContainer>
+                              </LocalizationProvider>
+                              <FormControl
+                                sx={{ m: 1 }}
+                                className="w-full top-2 right-2">
+                                <InputLabel id="demo-simple-select-helper-label">
+                                  Select time
+                                </InputLabel>
+                                <Select
+                                  labelId="demo-simple-select-helper-label"
+                                  id="demo-simple-select-helper"
+                                  value={time}
+                                  label="Select time"
+                                  onChange={handleChangeTime}>
+                                  <MenuItem value="">
+                                    <em>None</em>
+                                  </MenuItem>
+                                  <MenuItem value={9}>9.00 am</MenuItem>
+                                  <MenuItem value={10}>10.00 am</MenuItem>
+                                  <MenuItem value={11}>11.00 am</MenuItem>
+                                  <MenuItem value={12}>12.00 pm</MenuItem>
+                                  <MenuItem value={13}>1.00 pm</MenuItem>
+                                  <MenuItem value={14}>2.00 pm</MenuItem>
+                                  <MenuItem value={15}>3.00 pm</MenuItem>
+                                  <MenuItem value={16}>4.00 pm</MenuItem>
+                                  <MenuItem value={17}>5.00 pm</MenuItem>
+                                  <MenuItem value={18}>6.00 pm</MenuItem>
+                                  <MenuItem value={19}>7.00 pm</MenuItem>
+                                </Select>
+                                {/* <Select
+                                  labelId="demo-simple-select-helper-label"
+                                  id="demo-simple-select-helper"
+                                  value={time}
+                                  label="Select time"
+                                  onChange={handleChangeTime}>
+                                  {menuItems
+                                    .filter(
+                                      (item) =>
+                                        !excludedTimes.includes(item.value)
+                                    )
+                                    .map((item) => (
+                                      <MenuItem
+                                        key={item.value}
+                                        value={item.value}>
+                                        {item.label}
+                                      </MenuItem>
+                                    ))}
+                                </Select> */}
+                                {errors.id && (
+                                  <p className="text-red-600">
+                                    Please select the package id
+                                  </p>
+                                )}
+                              </FormControl>
+                            </DialogContent>
+                            <DialogActions>
+                              <Button autoFocus onClick={handleClose}>
+                                Cancel
+                              </Button>
+                              <Button
+                                className="right-2"
+                                variant="outlined"
+                                onClick={onBooking}
+                                autoFocus>
+                                Book
+                              </Button>
+                            </DialogActions>
+                          </form>
                         </Dialog>
                       </div>
                     </CardActions>

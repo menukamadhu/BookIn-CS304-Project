@@ -80,14 +80,6 @@ const Reviews = () => {
     setValue(newValue);
   };
 
-  // Speed Dial
-  const actions = [
-    { icon: <UploadFileIcon />, name: "add package" },
-    // { icon: <SaveIcon />, name: "Save" },
-    // { icon: <PrintIcon />, name: "Print" },
-    // { icon: <ShareIcon />, name: "Share" },
-  ];
-
   // Responsive
   const [open, setOpen] = useState(false);
   useEffect(() => {
@@ -120,7 +112,7 @@ const Reviews = () => {
   // get all reviews
   const [reviewDetails, setReviewDetails] = useState("");
   useEffect(() => {
-    async function fetchPackages() {
+    async function fetchReviews() {
       const res = await AuthenticationServices.GetReviewsBySalon(salonId);
       if (res.data.status == 1) {
         console.log("Hello");
@@ -129,7 +121,7 @@ const Reviews = () => {
       }
     }
     if (salonId) {
-      fetchPackages();
+      fetchReviews();
     }
   }, [salonId]);
   console.log("aaaaaaaa review", reviewDetails);

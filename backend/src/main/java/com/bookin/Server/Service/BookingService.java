@@ -53,5 +53,19 @@ public class BookingService {
         return  modelMapper.map(list, new TypeToken<List<BookingDTO>>(){}.getType());
     }
 
+    public String deleteBooking(int bookingId){
+        if (bookingRepo.existsById(bookingId)){
+            bookingRepo.deleteById(bookingId);
+            return VarList.RSP_SUCCESS;
+        }else {
+            return VarList.RSP_NO_DATA_FOUND;
+        }
+    }
+
+//    public List<BookingDTO> getBookingByClientIdAndDone(int clientId,boolean done){
+//        List<Booking> list = bookingRepo.findBookingByClientIdAndDone(clientId,done);
+//        return  modelMapper.map(list, new TypeToken<List<BookingDTO>>(){}.getType());
+//    }
+
 
 }

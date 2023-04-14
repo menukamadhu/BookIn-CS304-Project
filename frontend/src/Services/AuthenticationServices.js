@@ -250,6 +250,17 @@ const GetBookingByClientId = async (clientId) => {
   });
   return response;
 };
+
+// delete Booking
+const DeleteBooking = async (bookingId) => {
+  const response = await axios({
+    method: "delete",
+    url: `http://localhost:8080/salon/booking/deleteBooking/${bookingId}`,
+    headers: { "Content-Type": "application/json; charset=utf-8" },
+  });
+  return response;
+};
+
 const AuthenticationServices = {
   userLogin,
   Register,
@@ -272,6 +283,9 @@ const AuthenticationServices = {
   UpdateBooking,
   GetBookingByDate,
   GetBookingByDone,
+  GetBookingBySalonId,
+  GetBookingByClientId,
+  DeleteBooking,
 };
 
 export default AuthenticationServices;
