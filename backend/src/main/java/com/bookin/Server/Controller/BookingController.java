@@ -119,4 +119,54 @@ public class BookingController {
             return new ResponseEntity(responseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping(value = "/getBookingBySalonId/{salonId}")
+    public ResponseEntity getBookingBySalonId(@PathVariable int salonId){
+        try {
+            Map<String,Object> map = new LinkedHashMap<String,Object>();
+            List<BookingDTO> bookingDTO = bookingService.getBookingBySalonId(salonId);
+            if (bookingDTO!=null){
+                map.put("status",1);
+                map.put("message","Success");
+                map.put("data",bookingDTO);
+                return new ResponseEntity(map, HttpStatus.ACCEPTED);
+
+            }else{
+                map.clear();
+                map.put("status",0);
+                map.put("message","Booking list is not found");
+                return new ResponseEntity(responseDTO,HttpStatus.BAD_REQUEST);
+            }
+        }catch (Exception e) {
+            responseDTO.setCode(VarList.RSP_ERROR);
+            responseDTO.setMessage(e.getMessage());
+            responseDTO.setContent(null);
+            return new ResponseEntity(responseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping(value = "/getBookingByClientId/{clientId}")
+    public ResponseEntity getBookingByClientId(@PathVariable int clientId){
+        try {
+            Map<String,Object> map = new LinkedHashMap<String,Object>();
+            List<BookingDTO> bookingDTO = bookingService.getBookingByClientId(clientId);
+            if (bookingDTO!=null){
+                map.put("status",1);
+                map.put("message","Success");
+                map.put("data",bookingDTO);
+                return new ResponseEntity(map, HttpStatus.ACCEPTED);
+
+            }else{
+                map.clear();
+                map.put("status",0);
+                map.put("message","Booking list is not found");
+                return new ResponseEntity(responseDTO,HttpStatus.BAD_REQUEST);
+            }
+        }catch (Exception e) {
+            responseDTO.setCode(VarList.RSP_ERROR);
+            responseDTO.setMessage(e.getMessage());
+            responseDTO.setContent(null);
+            return new ResponseEntity(responseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

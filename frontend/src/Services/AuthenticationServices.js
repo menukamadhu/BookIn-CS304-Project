@@ -230,6 +230,26 @@ const GetBookingByDone = async (doneBook) => {
   });
   return response;
 };
+
+// Get Booking By SalonId
+const GetBookingBySalonId = async (salonId) => {
+  const response = await axios({
+    method: "get",
+    url: `http://localhost:8080/salon/booking/getBookingBySalonId/${salonId}`,
+    headers: { "Content-Type": "application/json; charset=utf-8" },
+  });
+  return response;
+};
+
+// Get Booking By ClinetId
+const GetBookingByClientId = async (clientId) => {
+  const response = await axios({
+    method: "get",
+    url: `http://localhost:8080/salon/booking/getBookingByClientId/${clientId}`,
+    headers: { "Content-Type": "application/json; charset=utf-8" },
+  });
+  return response;
+};
 const AuthenticationServices = {
   userLogin,
   Register,

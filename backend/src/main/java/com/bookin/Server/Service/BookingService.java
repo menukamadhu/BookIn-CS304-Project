@@ -43,4 +43,15 @@ public class BookingService {
         return  modelMapper.map(list, new TypeToken<List<BookingDTO>>(){}.getType());
     }
 
+    public List<BookingDTO> getBookingBySalonId(int salonId){
+        List<Booking> list = bookingRepo.findBookingBySalonId(salonId);
+        return  modelMapper.map(list, new TypeToken<List<BookingDTO>>(){}.getType());
+    }
+
+    public List<BookingDTO> getBookingByClientId(int clientId){
+        List<Booking> list = bookingRepo.findBookingByClientId(clientId);
+        return  modelMapper.map(list, new TypeToken<List<BookingDTO>>(){}.getType());
+    }
+
+
 }

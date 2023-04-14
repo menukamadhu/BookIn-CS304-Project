@@ -29,4 +29,9 @@ public class Booking {
     @JoinColumn(name = "clientId", referencedColumnName = "clientID")
     private Client client;
 
+    @JsonIgnore
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "salonId", referencedColumnName = "SalonID")
+    private Salon salon;
+
 }

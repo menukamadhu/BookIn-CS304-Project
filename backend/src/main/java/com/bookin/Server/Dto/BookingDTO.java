@@ -14,5 +14,6 @@ public class BookingDTO {
     private boolean doneBook;
     private int clientId;
     private int packagesPackageId;
+    private int salonId;
 
 }
