@@ -93,8 +93,8 @@ const Reviews = () => {
   const onNavigateUploads = () => {
     navigate("/Uploads");
   };
-  const onNavigateAppoinment = () => {
-    navigate("/Appoinment");
+  const onNavigateAppointment = () => {
+    navigate("/Appointment");
   };
   const onNavigateCompleted = () => {
     navigate("/Completed");
@@ -220,14 +220,14 @@ const Reviews = () => {
                       </Link>
                     </li>
                     <li>
-                      <Link to="/Appoinment">
+                      <Link to="/Appointment">
                         <Tabs
                           value={value}
                           onChange={handleChange}
                           textColor="primary"
                           indicatorColor="primary"
                           aria-label="primary tabs example">
-                          <Tab value="three" label="Appoinment" />
+                          <Tab value="three" label="Appointment" />
                         </Tabs>
                       </Link>
                     </li>
@@ -310,14 +310,14 @@ const Reviews = () => {
                     label="Uploads"
                   />
                   <Tab
-                    onClick={onNavigateAppoinment}
+                    onClick={onNavigateAppointment}
                     value="three"
-                    label="Appoinment"
+                    label="Appointment"
                   />
                   <Tab
                     onClick={onNavigateCompleted}
                     value="four"
-                    label="Completed Appoinment"
+                    label="Completed Appointment"
                   />
                   <Tab
                     onClick={onNavigateReviews}

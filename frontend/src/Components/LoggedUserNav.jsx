@@ -45,6 +45,8 @@ function LoggedUserNav({ setUser }) {
   const onNavigate = () => {
     if (role == "Salon") {
       navigate("/ProfileS");
+    } else if (role == "Admin") {
+      navigate("/Admin");
     } else {
       navigate("/ProfileC");
     }
@@ -53,14 +55,18 @@ function LoggedUserNav({ setUser }) {
   const onNavigateDash = () => {
     if (role == "Salon") {
       navigate("/SalonProfile");
+    } else if (role == "Admin") {
+      navigate("/Admin");
     } else {
-      navigate("/UserHome");
+      navigate("/MyBookings");
     }
   };
 
   const onLink = () => {
     if (role == "Salon") {
       navigate("/SalonProfile");
+    } else if (role == "Admin") {
+      navigate("/Admin");
     } else {
       navigate("/UserHome");
     }
@@ -100,7 +106,7 @@ function LoggedUserNav({ setUser }) {
               tabIndex={0}
               className="p-2 mt-3 text-gray-800 bg-white shadow menu menu-compact dropdown-content rounded-box w-52">
               <li>
-                <a onClick={onNavigateDash}>Profile</a>
+                <a onClick={onNavigateDash}>User Dashboard</a>
               </li>
               <li>
                 <a className="justify-between" onClick={onNavigate}>

@@ -19,7 +19,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ProfileS from "./Pages/ProfileS";
 import ProfileC from "./Pages/ProfileC";
-import Appoinment from "./Pages/Salon/Appoinment";
+import Appointment from "./Pages/Salon/Appointment";
 import Reviews from "./Pages/Salon/Reviews";
 import Completed from "./Pages/Salon/Completed";
 import Uploads from "./Pages/Salon/Uploads";
@@ -28,6 +28,8 @@ import WorkHours from "./Pages/Salon/WorkHours";
 import BookingPage from "./Pages/BookingPage";
 import Photos from "./Pages/Photos";
 import ReviewsC from "./Pages/ReviewsC";
+import MyBookings from "./Pages/MyBookings";
+import Admin from "./Pages/Admin";
 
 function App() {
   return (
@@ -58,7 +60,7 @@ function App() {
           <Route path="/UserHome" element={<UserHome />} />
           <Route path="/ProfileS" element={<ProfileS />} />
           <Route path="/ProfileC" element={<ProfileC />} />
-          <Route path="/Appoinment" element={<Appoinment />} />
+          <Route path="/Appointment" element={<Appointment />} />
           <Route path="/Completed" element={<Completed />} />
           <Route path="/Reviews" element={<Reviews />} />
           <Route path="/Uploads" element={<Uploads />} />
@@ -67,6 +69,8 @@ function App() {
           <Route path="/BookingPage" element={<BookingPage />} />
           <Route path="/Photos" element={<Photos />} />
           <Route path="/ReviewsC" element={<ReviewsC />} />
+          <Route path="/MyBookings" element={<MyBookings />} />
+          <Route path="/Admin" element={<Admin />} />
         </Routes>
       </BrowserRouter>
     </div>

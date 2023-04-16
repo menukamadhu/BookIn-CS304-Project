@@ -21,12 +21,12 @@ public class Review {
     private double rate;
 
     @JsonIgnore
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne()
     @JoinColumn(name = "salonId",referencedColumnName = "salonID")
     private Salon salon;
 
     @JsonIgnore
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne()
     @JoinColumn(name = "clientId",referencedColumnName = "clientID")
     private Client client;
 }

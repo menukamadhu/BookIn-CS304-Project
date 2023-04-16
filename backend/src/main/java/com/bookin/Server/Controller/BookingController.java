@@ -170,6 +170,81 @@ public class BookingController {
         }
     }
 
+    @GetMapping(value = "/getBookingBySalonIdAndDate/{salonId}")
+    public ResponseEntity getBookingBySalonIdAndDate(@PathVariable int salonId,@RequestParam String bookingDate){
+        try {
+            Map<String,Object> map = new LinkedHashMap<String,Object>();
+            List<BookingDTO> bookingDTO = bookingService.getBookingBySalonIdAndDate(salonId,bookingDate);
+            if (bookingDTO!=null){
+                map.put("status",1);
+                map.put("message","Success");
+                map.put("data",bookingDTO);
+                return new ResponseEntity(map, HttpStatus.ACCEPTED);
+
+            }else{
+                map.clear();
+                map.put("status",0);
+                map.put("message","Booking list is not found");
+                return new ResponseEntity(responseDTO,HttpStatus.BAD_REQUEST);
+            }
+        }catch (Exception e) {
+            responseDTO.setCode(VarList.RSP_ERROR);
+            responseDTO.setMessage(e.getMessage());
+            responseDTO.setContent(null);
+            return new ResponseEntity(responseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping(value = "/getBookingBySalonIdAndDone/{salonId}")
+    public ResponseEntity getBookingBySalonIdAndDone(@PathVariable int salonId,@RequestParam boolean doneBook){
+        try {
+            Map<String,Object> map = new LinkedHashMap<String,Object>();
+            List<BookingDTO> bookingDTO = bookingService.getBookingBySalonIdAndDone(salonId,doneBook);
+            if (bookingDTO!=null){
+                map.put("status",1);
+                map.put("message","Success");
+                map.put("data",bookingDTO);
+                return new ResponseEntity(map, HttpStatus.ACCEPTED);
+
+            }else{
+                map.clear();
+                map.put("status",0);
+                map.put("message","Booking list is not found");
+                return new ResponseEntity(responseDTO,HttpStatus.BAD_REQUEST);
+            }
+        }catch (Exception e) {
+            responseDTO.setCode(VarList.RSP_ERROR);
+            responseDTO.setMessage(e.getMessage());
+            responseDTO.setContent(null);
+            return new ResponseEntity(responseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping(value = "/getBookingByClientIdAndDone/{clientId}")
+    public ResponseEntity getBookingByClientIdAndDone(@PathVariable int clientId, @RequestParam boolean doneBook){
+        try {
+            Map<String,Object> map = new LinkedHashMap<String,Object>();
+            List<BookingDTO> bookingDTO = bookingService.getBookingByClientIdAndDone(clientId,doneBook);
+            if (bookingDTO!=null){
+                map.put("status",1);
+                map.put("message","Success");
+                map.put("data",bookingDTO);
+                return new ResponseEntity(map, HttpStatus.ACCEPTED);
+
+            }else{
+                map.clear();
+                map.put("status",0);
+                map.put("message","Booking list is not found");
+                return new ResponseEntity(responseDTO,HttpStatus.BAD_REQUEST);
+            }
+        }catch (Exception e) {
+            responseDTO.setCode(VarList.RSP_ERROR);
+            responseDTO.setMessage(e.getMessage());
+            responseDTO.setContent(null);
+            return new ResponseEntity(responseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @DeleteMapping(value = "/deleteBooking/{bookingId}")
     public ResponseEntity deleteBooking(@PathVariable int bookingId){
         try {
@@ -192,29 +267,4 @@ public class BookingController {
             return new ResponseEntity(responseDTO,HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
-//    @GetMapping(value = "/getBookingByClientIdAndDone/client/{clientId}/done/{done}")
-//    public ResponseEntity getBookingByClientIdAndDone(@PathVariable int clientId, @PathVariable boolean done){
-//        try {
-//            Map<String,Object> map = new LinkedHashMap<String,Object>();
-//            List<BookingDTO> bookingDTO = bookingService.getBookingByClientIdAndDone(clientId,done);
-//            if (bookingDTO!=null){
-//                map.put("status",1);
-//                map.put("message","Success");
-//                map.put("data",bookingDTO);
-//                return new ResponseEntity(map, HttpStatus.ACCEPTED);
-//
-//            }else{
-//                map.clear();
-//                map.put("status",0);
-//                map.put("message","Booking list is not found");
-//                return new ResponseEntity(responseDTO,HttpStatus.BAD_REQUEST);
-//            }
-//        }catch (Exception e) {
-//            responseDTO.setCode(VarList.RSP_ERROR);
-//            responseDTO.setMessage(e.getMessage());
-//            responseDTO.setContent(null);
-//            return new ResponseEntity(responseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
-//    }
 }

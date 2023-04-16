@@ -22,12 +22,12 @@ public class Salon {
     private String district;
     private String password;
 
-    @OneToMany(mappedBy = "salon" , cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "salon")
     private List<Packages> packages;
 
-    @OneToMany(mappedBy = "salon" , cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "salon" )
     private List<Review> review;
 
-    @OneToMany(mappedBy = "salon" , cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "salon")
     private List<Booking> booking;
 }

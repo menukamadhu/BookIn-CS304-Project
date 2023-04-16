@@ -26,11 +26,11 @@ public class Packages {
     private String packagePrice;
 
     @JsonIgnore
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne()
     @JoinColumn(name = "salonId", referencedColumnName = "salonID")
     private Salon salon;
 
-    @OneToMany(mappedBy = "packages",cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "packages")
     private List<Booking> bookings;
 
 }

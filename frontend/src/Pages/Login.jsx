@@ -67,6 +67,8 @@ const Login = () => {
       );
       if (result.data.loginDTO.role == "Salon") {
         navigate("/SalonProfile");
+      } else if (result.data.loginDTO.role == "Admin") {
+        navigate("/Admin");
       } else {
         navigate("/UserHome");
       }

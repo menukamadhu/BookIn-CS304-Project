@@ -169,8 +169,8 @@ const SalonProfile = () => {
   const onNavigateUploads = () => {
     navigate("/Uploads");
   };
-  const onNavigateAppoinment = () => {
-    navigate("/Appoinment");
+  const onNavigateAppointment = () => {
+    navigate("/Appointment");
   };
   const onNavigateCompleted = () => {
     navigate("/Completed");
@@ -186,7 +186,7 @@ const SalonProfile = () => {
   };
 
   return (
-    <div className="bg-white">
+    <div className="w-screen bg-white">
       <Header />
       <div>
         {loading ? (
@@ -246,14 +246,14 @@ const SalonProfile = () => {
                       </Link>
                     </li>
                     <li>
-                      <Link to="/Appoinment">
+                      <Link to="/Appointment">
                         <Tabs
                           value={value}
                           onChange={handleChange}
                           textColor="primary"
                           indicatorColor="primary"
                           aria-label="primary tabs example">
-                          <Tab value="three" label="Appoinment" />
+                          <Tab value="three" label="Appointment" />
                         </Tabs>
                       </Link>
                     </li>
@@ -336,14 +336,14 @@ const SalonProfile = () => {
                     label="Uploads"
                   />
                   <Tab
-                    onClick={onNavigateAppoinment}
+                    onClick={onNavigateAppointment}
                     value="three"
-                    label="Appoinment"
+                    label="Appointment"
                   />
                   <Tab
                     onClick={onNavigateCompleted}
                     value="four"
-                    label="Completed Appoinment"
+                    label="Completed Appointment"
                   />
                   <Tab
                     onClick={onNavigateReviews}

@@ -166,7 +166,7 @@ const ProfileC = () => {
   };
 
   return (
-    <div>
+    <div className="w-screen">
       <Header />
       <div className="bg-white md:pt-10">
         <h1 className="flex items-center justify-center text-5xl font-bold text-blue-600 md:text-6xl">

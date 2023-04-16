@@ -20,17 +20,17 @@ public class Booking {
     private boolean doneBook;
 
     @JsonIgnore
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne()
     @JoinColumn(name = "packageId",referencedColumnName = "packageId")
     private Packages packages;
 
     @JsonIgnore
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne()
     @JoinColumn(name = "clientId", referencedColumnName = "clientID")
     private Client client;
 
     @JsonIgnore
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne()
     @JoinColumn(name = "salonId", referencedColumnName = "SalonID")
     private Salon salon;
 

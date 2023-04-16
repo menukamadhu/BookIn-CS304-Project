@@ -26,9 +26,9 @@ public class Client {
 //    @OneToOne(mappedBy = "client",cascade = CascadeType.REMOVE)
 //    private Login login;
 
-    @OneToMany(mappedBy = "client",cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "client")
     private List<Booking> bookings;
 
-    @OneToMany(mappedBy = "client",cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "client")
     private List<Review> review;
 }

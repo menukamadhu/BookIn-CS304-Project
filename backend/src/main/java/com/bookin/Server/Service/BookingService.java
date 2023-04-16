@@ -53,6 +53,21 @@ public class BookingService {
         return  modelMapper.map(list, new TypeToken<List<BookingDTO>>(){}.getType());
     }
 
+    public List<BookingDTO> getBookingBySalonIdAndDate(int salonId,String bookingDate){
+        List<Booking> list = bookingRepo.findBookingBySalonIdAndDate(salonId,bookingDate);
+        return  modelMapper.map(list, new TypeToken<List<BookingDTO>>(){}.getType());
+    }
+
+    public List<BookingDTO> getBookingBySalonIdAndDone(int salonId,boolean doneBook){
+        List<Booking> list = bookingRepo.findBookingBySalonIdAndDone(salonId,doneBook);
+        return  modelMapper.map(list, new TypeToken<List<BookingDTO>>(){}.getType());
+    }
+
+    public List<BookingDTO> getBookingByClientIdAndDone(int clientId,boolean doneBook){
+        List<Booking> list = bookingRepo.findBookingByClientIdIdAndDone(clientId,doneBook);
+        return  modelMapper.map(list, new TypeToken<List<BookingDTO>>(){}.getType());
+    }
+
     public String deleteBooking(int bookingId){
         if (bookingRepo.existsById(bookingId)){
             bookingRepo.deleteById(bookingId);
@@ -61,11 +76,5 @@ public class BookingService {
             return VarList.RSP_NO_DATA_FOUND;
         }
     }
-
-//    public List<BookingDTO> getBookingByClientIdAndDone(int clientId,boolean done){
-//        List<Booking> list = bookingRepo.findBookingByClientIdAndDone(clientId,done);
-//        return  modelMapper.map(list, new TypeToken<List<BookingDTO>>(){}.getType());
-//    }
-
 
 }

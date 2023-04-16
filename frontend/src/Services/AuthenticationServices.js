@@ -109,6 +109,18 @@ const GetAllSalons = async () => {
   // return Http.get < any > "";
 };
 
+// Get all clients
+const GetAllClients = async () => {
+  const response = await axios({
+    method: "get",
+    url: `http://localhost:8080/client/getAllClients`,
+    // data: data,
+    headers: { "Content-Type": "application/json; charset=utf-8" },
+  });
+  return response;
+  // return Http.get < any > "";
+};
+
 // add a Package
 const AddPackage = async (data) => {
   console.log("data", data);
@@ -261,6 +273,36 @@ const DeleteBooking = async (bookingId) => {
   return response;
 };
 
+// get booking by salon and date
+const GetBookingBySalonAndDate = async (salonId, date) => {
+  const response = await axios({
+    method: "get",
+    url: `http://localhost:8080/salon/booking/getBookingBySalonIdAndDate/${salonId}?bookingDate=${date}`,
+    headers: { "Content-Type": "application/json; charset=utf-8" },
+  });
+  return response;
+};
+
+// get booking by salon and done
+const GetBookingBySalonAndDone = async (salonId, done) => {
+  const response = await axios({
+    method: "get",
+    url: `http://localhost:8080/salon/booking/getBookingBySalonIdAndDone/${salonId}?doneBook=${done}`,
+    headers: { "Content-Type": "application/json; charset=utf-8" },
+  });
+  return response;
+};
+
+// get booking by salon and done
+const GetBookingByClientAndDone = async (clientId, done) => {
+  const response = await axios({
+    method: "get",
+    url: `http://localhost:8080/salon/booking/getBookingByClientIdAndDone/${clientId}?doneBook=${done}`,
+    headers: { "Content-Type": "application/json; charset=utf-8" },
+  });
+  return response;
+};
+
 const AuthenticationServices = {
   userLogin,
   Register,
@@ -286,6 +328,10 @@ const AuthenticationServices = {
   GetBookingBySalonId,
   GetBookingByClientId,
   DeleteBooking,
+  GetAllClients,
+  GetBookingBySalonAndDate,
+  GetBookingBySalonAndDone,
+  GetBookingByClientAndDone,
 };
 
 export default AuthenticationServices;

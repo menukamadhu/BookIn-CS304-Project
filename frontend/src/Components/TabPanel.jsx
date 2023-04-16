@@ -41,6 +41,8 @@ import Divider from "@mui/material/Divider";
 import ListItemText from "@mui/material/ListItemText";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
+import AlarmOnIcon from "@mui/icons-material/AlarmOn";
+import { blue, red } from "@mui/material/colors";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -122,13 +124,15 @@ export default function BasicTabs() {
   // const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
   const [packageId, setPackageId] = useState(0);
   const [duration, setDuration] = useState(0);
+  const [name, setName] = useState("");
   const [bookings, setBookings] = useState(null);
   // const [bookingTimes, setBookingTimes] = useState([]);
 
-  const handleClickOpen = (id, duration) => {
+  const handleClickOpen = (id, duration, name) => {
     setOpen(true);
     setPackageId(id);
     setDuration(duration);
+    setName(name);
     // setBookingTimes(bookings.map((b) => b.bookingTime));
     console.log("xxxxxxxxxxxxxxxxxxxx btimes", bookingTimes);
   };
@@ -286,6 +290,42 @@ export default function BasicTabs() {
     { value: 19, label: "7.00 pm" },
   ];
 
+  // get time by date
+  const [timeSlots, setTimeSlots] = useState([]);
+
+  const fetchBookingsByDate = async (e) => {
+    e.preventDefault();
+    const date = `${valueD.$M + 1}/${valueD.$D}/${valueD.$y}`;
+    console.log(date);
+    const res = await AuthenticationServices.GetBookingBySalonAndDate(
+      myPropValue,
+      date
+    );
+
+    if (res.data.status == 1) {
+      console.log(res.data);
+      setTimeSlots(res.data.data);
+    }
+  };
+
+  // useEffect(() => {
+  //   console.log(`${valueD.$M + 1}/${valueD.$D}/${valueD.$y}`);
+  // }, [valueD]);
+
+  // useEffect(() => {
+  //   async function fetchBookingsByDate() {
+  //     const res = await AuthenticationServices.GetBookingBySalonAndDate(myPropValue,date);
+  //     if (res.data.status == 1) {
+  //       console.log("Hello");
+  //       setTimeSlots(res.data.data);
+  //     }
+  //   }
+  //   if (myPropValue,date) {
+  //     fetchBookingsByDate();
+  //   }
+  // }, [myPropValue,date]);
+  // console.log("all bookings", bookings);
+
   return (
     <Box sx={{ width: "100%" }}>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
@@ -338,7 +378,8 @@ export default function BasicTabs() {
                           onClick={() =>
                             handleClickOpen(
                               packages.packageId,
-                              packages.duration
+                              packages.duration,
+                              packages.packageName
                             )
                           }>
                           Book
@@ -349,7 +390,7 @@ export default function BasicTabs() {
                           aria-labelledby="responsive-dialog-title">
                           <form action="">
                             <DialogTitle id="responsive-dialog-title">
-                              {"book a time and date"}
+                              {name}
                             </DialogTitle>
                             <DialogContent>
                               <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -360,6 +401,28 @@ export default function BasicTabs() {
                                   />
                                 </DemoContainer>
                               </LocalizationProvider>
+                              <DialogActions>
+                                <Button
+                                  className="right-2"
+                                  variant="outlined"
+                                  onClick={fetchBookingsByDate}
+                                  autoFocus>
+                                  Show bookings
+                                </Button>
+                              </DialogActions>
+                              <div className="grid items-center justify-center w-full grid-cols-2 px-1">
+                                {timeSlots?.map((time) => (
+                                  <div key={time.bookingId}>
+                                    <Button
+                                      color="error"
+                                      size="small"
+                                      variant="outlined"
+                                      startIcon={<AlarmOnIcon />}>
+                                      {time.bookingTime}
+                                    </Button>
+                                  </div>
+                                ))}
+                              </div>
                               <FormControl
                                 sx={{ m: 1 }}
                                 className="w-full top-2 right-2">
@@ -419,7 +482,7 @@ export default function BasicTabs() {
                               </Button>
                               <Button
                                 className="right-2"
-                                variant="outlined"
+                                variant="contained"
                                 onClick={onBooking}
                                 autoFocus>
                                 Book
