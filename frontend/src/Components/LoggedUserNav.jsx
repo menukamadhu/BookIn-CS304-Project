@@ -71,6 +71,7 @@ function LoggedUserNav({ setUser }) {
       navigate("/UserHome");
     }
   };
+
   return (
     <div
       className={`md:w-100% bg-slate-100 w-screen ${
