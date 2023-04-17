@@ -410,7 +410,7 @@ export default function BasicTabs() {
                                   Show bookings
                                 </Button>
                               </DialogActions>
-                              <div className="grid items-center justify-center w-full grid-cols-2 px-1">
+                              <div className="grid items-center justify-center w-full grid-cols-2 gap-2 px-1">
                                 {timeSlots?.map((time) => (
                                   <div key={time.bookingId}>
                                     <Button

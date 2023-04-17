@@ -47,7 +47,7 @@ const Appointment = () => {
     const parseData = JSON.parse(dataFromLocalStorage);
     const userIdFromData = parseData?.userId;
     setSalonId(userIdFromData);
-    console.log(salonId);
+    // console.log(salonId);
   }, []);
 
   useEffect(() => {
@@ -57,7 +57,7 @@ const Appointment = () => {
         const response = await AuthenticationServices.GetSalonDetails(salonId);
         if (response.data.code == "00") {
           setSalonDetails(response.data.content);
-          console.log(response.data.content);
+          // console.log(response.data.content);
         }
       } catch (error) {
         console.log(error);
@@ -124,28 +124,30 @@ const Appointment = () => {
       if (res.data.status == 1) {
         console.log("Hello");
         setBookingDetails(res.data.data);
-        console.log(res.data.data);
+        // console.log(res.data.data);
       }
     }
     if (salonId) {
       fetchBookings();
     }
   }, [salonId]);
-  console.log("aaaaaaaa booking", bookingDetails);
+  // console.log("aaaaaaaa booking", bookingDetails);
 
   // View Client
   const [openV, setOpenV] = useState(false);
   const [viewId, setViewId] = useState(0);
+  const [pkgId, setPkgId] = useState(0);
 
-  const handleClickOpenV = (id) => {
+  const handleClickOpenV = (id, pid) => {
     setOpenV(true);
     setViewId(id);
+    setPkgId(pid);
   };
 
   const handleCloseV = () => {
     setOpenV(false);
   };
-  console.log("aaaaaaaa viewId", viewId);
+  console.log("aaaaaaaaxxxxxxxxxxxxxxxxxxxxxxxxxxx", pkgId);
 
   // view client
   const [clientDetails, setclientDetails] = useState(null);
@@ -169,19 +171,48 @@ const Appointment = () => {
     }
   }, [viewId]);
 
+  // view package details
+  const [pkgDetail, setPkgDetails] = useState(null);
+
+  useEffect(() => {
+    async function fetchPkgDetails() {
+      setLoading(true);
+      try {
+        const response = await AuthenticationServices.GetPackageByPackageId(
+          pkgId
+        );
+        console.log("response", response);
+        if (response?.data.status === 1) {
+          setPkgDetails(response.data.data);
+          // console.log("aaaaaaaxxxxxxxxxxxxxxxxxx package", response.data.data);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+      setLoading(false);
+    }
+    if (pkgId) {
+      fetchPkgDetails();
+    }
+  }, [pkgId]);
+
+  console.log("package details", pkgDetail);
+
   // View Client after confirmed
   const [openVC, setOpenVC] = useState(false);
   const [viewIdC, setViewIdC] = useState(0);
+  const [pkgIdC, setPkgIdC] = useState(0);
 
-  const handleClickOpenVC = (id) => {
+  const handleClickOpenVC = (id, pidC) => {
     setOpenVC(true);
     setViewIdC(id);
+    setPkgIdC(pidC);
   };
 
   const handleCloseVC = () => {
     setOpenVC(false);
   };
-  console.log("aaaaaaaaxxxxxxxx viewId", viewIdC);
+  // console.log("aaaaaaaaxxxxxxxx viewId", viewIdC);
 
   // view client confirmed
   const [clientDetailsC, setclientDetailsC] = useState(null);
@@ -205,6 +236,31 @@ const Appointment = () => {
     }
   }, [viewIdC]);
 
+  // view package details after confirm
+  const [pkgDetailC, setPkgDetailsC] = useState(null);
+
+  useEffect(() => {
+    async function fetchPkgDetails() {
+      setLoading(true);
+      try {
+        const response = await AuthenticationServices.GetPackageByPackageId(
+          pkgIdC
+        );
+        console.log("response", response);
+        if (response?.data.status === 1) {
+          setPkgDetailsC(response.data.data);
+          // console.log("aaaaaaaxxxxxxxxxxxxxxxxxx package", response.data.data);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+      setLoading(false);
+    }
+    if (pkgIdC) {
+      fetchPkgDetails();
+    }
+  }, [pkgIdC]);
+
   // delete Booking
   const [openD, setOpenD] = useState(false);
   const [bookingId, setBookingId] = useState(0);
@@ -217,7 +273,7 @@ const Appointment = () => {
   const handleCloseD = () => {
     setOpenD(false);
   };
-  console.log("aaaaaaaa viewId", bookingId);
+  // console.log("aaaaaaaa viewId", bookingId);
 
   const HandleDeleteBooking = async () => {
     try {
@@ -264,7 +320,7 @@ const Appointment = () => {
   console.log("booking id", confirmId);
   const onConfirm = async (e) => {
     e.preventDefault();
-    console.log("xxxxxxxxxxxxxxxxxxx");
+    // console.log("xxxxxxxxxxxxxxxxxxx");
 
     const user = {
       bookingId: confirmId,
@@ -280,7 +336,7 @@ const Appointment = () => {
       const result = await AuthenticationServices.UpdateBooking(user);
       console.log(result);
       if (result.data.code === "00") {
-        console.log(result.data.content);
+        // console.log(result.data.content);
         toast.success("Your Details have been changed successfully!");
         setOpenC(false);
         setTimeout(async () => {
@@ -315,7 +371,7 @@ const Appointment = () => {
   }, [salonId]);
 
   return (
-    <div className="bg-white">
+    <div className="w-screen bg-white">
       <Header />
       <div>
         {loading ? (
@@ -323,7 +379,7 @@ const Appointment = () => {
         ) : error ? (
           <p>{error}</p>
         ) : salonDetials ? (
-          <div className="h-screen">
+          <div className="h-full">
             <div className="flex flex-col items-center justify-center gap-4 pb-4 md:flex-row">
               <h1 className="text-5xl font-bold text-blue-500 md:text-6xl">
                 Hello
@@ -536,7 +592,10 @@ const Appointment = () => {
                                 <Button
                                   variant="outlined"
                                   onClick={() =>
-                                    handleClickOpenV(booking.clientId)
+                                    handleClickOpenV(
+                                      booking.clientId,
+                                      booking.packagesPackageId
+                                    )
                                   }>
                                   View
                                 </Button>
@@ -603,6 +662,17 @@ const Appointment = () => {
                                     </DialogContentText>
                                     <DialogContentText id="alert-dialog-description">
                                       {clientDetails?.contactNum}
+                                    </DialogContentText>
+                                  </DialogContent>
+                                  <DialogTitle id="alert-dialog-title">
+                                    {pkgDetail?.packageName}
+                                  </DialogTitle>
+                                  <DialogContent>
+                                    <DialogContentText id="alert-dialog-description">
+                                      date : {booking?.bookingDate}
+                                    </DialogContentText>
+                                    <DialogContentText id="alert-dialog-description">
+                                      time : {booking?.bookingTime}
                                     </DialogContentText>
                                   </DialogContent>
                                   <DialogActions>
@@ -694,7 +764,10 @@ const Appointment = () => {
                                 <Button
                                   variant="outlined"
                                   onClick={() =>
-                                    handleClickOpenVC(bookingC.clientId)
+                                    handleClickOpenVC(
+                                      bookingC.clientId,
+                                      bookingC.packagesPackageId
+                                    )
                                   }>
                                   View
                                 </Button>
@@ -722,6 +795,17 @@ const Appointment = () => {
                                     </DialogContentText>
                                     <DialogContentText id="alert-dialog-description">
                                       {clientDetailsC?.contactNum}
+                                    </DialogContentText>
+                                  </DialogContent>
+                                  <DialogTitle id="alert-dialog-title">
+                                    {pkgDetailC?.packageName}
+                                  </DialogTitle>
+                                  <DialogContent>
+                                    <DialogContentText id="alert-dialog-description">
+                                      date : {bookingC?.bookingDate}
+                                    </DialogContentText>
+                                    <DialogContentText id="alert-dialog-description">
+                                      time : {bookingC?.bookingTime}
                                     </DialogContentText>
                                   </DialogContent>
                                   <DialogActions>

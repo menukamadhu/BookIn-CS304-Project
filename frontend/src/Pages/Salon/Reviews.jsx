@@ -168,7 +168,7 @@ const Reviews = () => {
         ) : error ? (
           <p>{error}</p>
         ) : salonDetials ? (
-          <div className="h-screen">
+          <div className="h-full">
             <div className="flex flex-col items-center justify-center gap-4 pb-4 md:flex-row">
               <h1 className="text-5xl font-bold text-blue-500 md:text-6xl">
                 Hello

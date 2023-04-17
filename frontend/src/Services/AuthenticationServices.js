@@ -133,6 +133,16 @@ const AddPackage = async (data) => {
   return response;
 };
 
+// get packages by Id
+const GetPackageByPackageId = async (packageId) => {
+  const response = await axios({
+    method: "get",
+    url: `http://localhost:8080/salon/package/getPackageById/${packageId}`,
+    headers: { "Content-Type": "application/json; charset=utf-8" },
+  });
+  return response;
+};
+
 // get packages by salon Id
 const GetPackagesBySalon = async (salonID) => {
   const response = await axios({
@@ -315,6 +325,7 @@ const AuthenticationServices = {
   DeleteClient,
   GetAllSalons,
   AddPackage,
+  GetPackageByPackageId,
   GetPackagesBySalon,
   UpdatePackage,
   DeletePackage,
