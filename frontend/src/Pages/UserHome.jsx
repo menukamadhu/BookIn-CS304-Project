@@ -17,6 +17,7 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
 
 const UserHome = () => {
   const navigate = useNavigate();
@@ -41,13 +42,34 @@ const UserHome = () => {
     },
   });
 
-  // console("aaa salon list", salonList);
+  // Search Salons
+  const [filteredSalonList, setFilteredSalonList] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  useEffect(() => {
+    const filteredSalons = salonList?.filter((salon) =>
+      salon.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+    setFilteredSalonList(filteredSalons);
+    if (searchQuery == "") {
+      setFilteredSalonList(salonList);
+    }
+  }, [searchQuery, salonList]);
 
   return (
-    <div className="bg-white">
+    <div className="w-screen h-full bg-white">
       <Header />
+      <div className="p-4 md:px-96">
+        <TextField
+          fullWidth
+          label="Search Salon"
+          id="fullWidth"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+      </div>
       <div className="grid items-center justify-center grid-cols-1 text-gray-800 bg-white md:px-52 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
-        {salonList?.map((salon) => (
+        {filteredSalonList?.map((salon) => (
           <div key={salon.salonID}>
             <div className="flex p-4 duration-300 md:hover:scale-110">
               <Card sx={{ maxWidth: 280 }}>
